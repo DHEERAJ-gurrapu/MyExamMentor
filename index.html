@@ -7,56 +7,45 @@
 
 <style>
 :root {
-  --bg: #fafafa;
+  --bg: #f7fdf6;        /* very light green */
   --panel: #ffffff;
-  --border: #e5e7eb;
+  --border: #d1e7d3;
   --text: #0f172a;
-  --muted: #64748b;
-  --accent: #0b5e4e;
+  --muted: #4b5563;
+  --accent: #3d9d6f;    /* pastel green accent */
   --radius: 12px;
+  --shadow: rgba(0,0,0,0.08);
 }
 
-* {
-  box-sizing: border-box;
-  font-family: Inter, system-ui, sans-serif;
-}
-
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--text);
-}
+/* GLOBAL */
+* { box-sizing: border-box; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); }
 
 /* HEADER */
 header {
   height: 64px;
   background: var(--panel);
-  border-bottom: 1px solid var(--border);
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
   padding: 0 24px;
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 4px 10px var(--shadow);
 }
 
 /* LOGO */
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
+.logo { display: flex; align-items: center; gap: 10px; }
+.logo img { height: 36px; }
 
-.logo img {
-  height: 36px;
-}
-
-/* TITLE CENTER */
+/* CENTER TITLE */
 .site-title {
   text-align: center;
-  font-weight: 600;
-  font-size: 18px;
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--accent);
 }
 
-/* DROPDOWN */
+/* TOP-RIGHT MENU */
 .menu {
   position: relative;
 }
@@ -67,6 +56,15 @@ header {
   cursor: pointer;
   font-size: 14px;
   color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.menu button::after {
+  content: '▾';
+  font-size: 12px;
+  color: var(--accent);
 }
 
 .menu-content {
@@ -76,19 +74,22 @@ header {
   background: var(--panel);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  box-shadow: 0 10px 30px rgba(0,0,0,.06);
+  box-shadow: 0 8px 20px var(--shadow);
   display: none;
-  min-width: 160px;
+  min-width: 180px;
+  overflow: hidden;
 }
 
 .menu-content div {
   padding: 10px 14px;
   cursor: pointer;
   font-size: 14px;
+  transition: background 0.2s;
 }
 
 .menu-content div:hover {
-  background: #f1f5f9;
+  background: #e6f4e9;
+  color: var(--accent);
 }
 
 .menu:hover .menu-content {
@@ -108,53 +109,68 @@ header {
   border-right: 1px solid var(--border);
   padding: 16px;
   overflow-y: auto;
+  box-shadow: inset -2px 0 8px rgba(0,0,0,0.02);
 }
 
-/* DETAILS */
+/* DETAILS / CHEVRONS */
 details summary {
   cursor: pointer;
-  padding: 8px;
+  padding: 10px 12px;
   font-weight: 600;
+  position: relative;
   list-style: none;
+  border-radius: var(--radius);
+  transition: background 0.2s;
 }
 
-details summary::-webkit-details-marker {
-  display: none;
+details[open] > summary { background: #e6f4e9; }
+
+details summary::marker { display: none; }
+details summary::after {
+  content: '▸';
+  position: absolute;
+  right: 12px;
+  transition: transform 0.2s;
 }
 
-/* SUBJECT */
+details[open] summary::after { transform: rotate(90deg); }
+
 .subject summary {
   font-weight: 500;
   color: var(--accent);
-  padding-left: 12px;
+  padding-left: 24px;
 }
 
-/* FILE */
+/* FILES */
 .file {
-  padding: 6px 16px;
+  padding: 6px 20px;
   font-size: 14px;
   color: var(--muted);
   cursor: pointer;
   border-radius: 8px;
+  transition: all 0.2s;
+  margin-left: 12px;
 }
 
 .file:hover {
-  background: #f1f5f9;
-  color: var(--text);
+  background: #e6f4e9;
+  color: var(--accent);
+  transform: translateX(4px);
 }
 
 /* CONTENT */
 .content {
   padding: 20px;
+  background: var(--bg);
 }
 
 iframe {
   width: 100%;
   height: 100%;
   border: none;
-  background: var(--panel);
   border-radius: var(--radius);
   box-shadow: 0 10px 25px rgba(0,0,0,.04);
+  background: var(--panel);
 }
 
 /* FOOTER */
@@ -165,6 +181,19 @@ footer {
   color: var(--muted);
   border-top: 1px solid var(--border);
   background: var(--panel);
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+}
+
+/* SCROLLBAR LIGHT */
+.sidebar::-webkit-scrollbar {
+  width: 8px;
+}
+.sidebar::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 8px;
+}
+.sidebar::-webkit-scrollbar-track {
+  background: #f0fdf4;
 }
 </style>
 </head>
@@ -172,17 +201,14 @@ footer {
 <body>
 
 <header>
-  <!-- LOGO -->
   <div class="logo">
     <img src="mem.logo" alt="MEM Logo">
   </div>
 
-  <!-- CENTER TITLE -->
   <div class="site-title">My Exam Mentor</div>
 
-  <!-- DROPDOWN -->
   <div class="menu">
-    <button>Menu ▾</button>
+    <button>Menu</button>
     <div class="menu-content">
       <div onclick="loadPage('introduction.html')">Introduction</div>
       <div onclick="loadPage('contact.html')">Contact Us</div>
@@ -192,7 +218,6 @@ footer {
 
 <div class="container">
   <aside class="sidebar" id="sidebar"></aside>
-
   <main class="content">
     <iframe id="viewer"></iframe>
   </main>
