@@ -1,1 +1,235 @@
-hello world
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>My Exam Mentor</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: #f3f4f6;
+}
+
+/* HEADER */
+header {
+  height: 60px;
+  background: #ffffff;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: bold;
+  font-size: 20px;
+  color: #0b5e4e;
+}
+
+.logo-box {
+  width: 38px;
+  height: 38px;
+  background: #0b5e4e;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+}
+
+/* TOP NAV */
+.top-nav a {
+  margin-left: 15px;
+  text-decoration: none;
+  color: #0b5e4e;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* LAYOUT */
+.container {
+  display: flex;
+  height: calc(100vh - 60px);
+}
+
+/* LEFT NAV */
+.sidebar {
+  width: 260px;
+  background: #ffffff;
+  border-right: 1px solid #ddd;
+  padding: 15px;
+  overflow-y: auto;
+}
+
+.folder {
+  margin-bottom: 10px;
+}
+
+.folder-title {
+  font-weight: bold;
+  cursor: pointer;
+  padding: 8px;
+  background: #eef5f3;
+  border-radius: 5px;
+}
+
+.subjects {
+  margin-left: 15px;
+  display: none;
+}
+
+.subject {
+  margin-top: 6px;
+}
+
+.subject-title {
+  cursor: pointer;
+  color: #0b5e4e;
+  font-weight: 500;
+}
+
+.files {
+  margin-left: 15px;
+  display: none;
+}
+
+.files div {
+  cursor: pointer;
+  padding: 4px 0;
+  color: #333;
+}
+
+/* RIGHT CONTENT */
+.content {
+  flex: 1;
+  padding: 15px;
+}
+
+iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: white;
+}
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 10px;
+  background: #ffffff;
+  border-top: 1px solid #ddd;
+  font-size: 14px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-box">MEM</div>
+    My Exam Mentor
+  </div>
+
+  <div class="top-nav">
+    <a onclick="loadPage('intro')">Introduction</a>
+    <a onclick="loadPage('about')">About Us</a>
+  </div>
+</header>
+
+<div class="container">
+  <!-- LEFT SIDEBAR -->
+  <div class="sidebar">
+
+    <!-- IGCSE -->
+    <div class="folder">
+      <div class="folder-title" onclick="toggle(this)">IGCSE</div>
+      <div class="subjects">
+        <div class="subject">
+          <div class="subject-title" onclick="toggle(this)">Maths</div>
+          <div class="files">
+            <div onclick="loadPDF('pdfs/igcse/maths/sample.pdf')">Sample PDF</div>
+          </div>
+        </div>
+
+        <div class="subject">
+          <div class="subject-title" onclick="toggle(this)">English</div>
+          <div class="files">
+            <div onclick="loadPDF('pdfs/igcse/english/sample.pdf')">Sample PDF</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CBSE -->
+    <div class="folder">
+      <div class="folder-title" onclick="toggle(this)">CBSE</div>
+      <div class="subjects">
+        <div class="subject">
+          <div class="subject-title" onclick="toggle(this)">Maths</div>
+          <div class="files">
+            <div onclick="loadPDF('pdfs/cbse/maths/sample.pdf')">Sample PDF</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SSC -->
+    <div class="folder">
+      <div class="folder-title" onclick="toggle(this)">SSC</div>
+      <div class="subjects">
+        <div class="subject">
+          <div class="subject-title" onclick="toggle(this)">English</div>
+          <div class="files">
+            <div onclick="loadPDF('pdfs/ssc/english/sample.pdf')">Sample PDF</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- RIGHT CONTENT -->
+  <div class="content">
+    <iframe id="viewer" src=""></iframe>
+  </div>
+</div>
+
+<footer>
+  © 2026 My Exam Mentor. All rights reserved.
+</footer>
+
+<script>
+function toggle(element) {
+  const next = element.nextElementSibling;
+  next.style.display = next.style.display === "block" ? "none" : "block";
+}
+
+function loadPDF(path) {
+  document.getElementById("viewer").src = path;
+}
+
+function loadPage(type) {
+  if (type === "intro") {
+    document.getElementById("viewer").srcdoc =
+      "<h2>Introduction</h2><p>Welcome to My Exam Mentor.</p>";
+  }
+  if (type === "about") {
+    document.getElementById("viewer").srcdoc =
+      "<h2>About Us</h2><p>My Exam Mentor helps students access exam resources easily.</p>";
+  }
+}
+</script>
+
+</body>
+</html>
