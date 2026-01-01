@@ -6,129 +6,190 @@
 <title>My Exam Mentor</title>
 
 <style>
+:root {
+  --bg: #f8fafc;
+  --panel: #ffffff;
+  --border: #e5e7eb;
+  --text: #0f172a;
+  --muted: #64748b;
+  --accent: #0b5e4e;
+  --radius: 14px;
+  --shadow: 0 10px 30px rgba(0,0,0,0.04);
+}
+
 * {
   box-sizing: border-box;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 body {
   margin: 0;
-  background: #f3f4f6;
+  background: var(--bg);
+  color: var(--text);
 }
 
 /* HEADER */
 header {
-  height: 60px;
-  background: #ffffff;
-  border-bottom: 1px solid #ddd;
+  height: 64px;
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 20px;
+  padding: 0 28px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 .logo {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-weight: bold;
-  font-size: 20px;
-  color: #0b5e4e;
+  gap: 12px;
+  font-weight: 600;
+  font-size: 18px;
 }
 
 .logo-box {
-  width: 38px;
-  height: 38px;
-  background: #0b5e4e;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--accent);
   color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 6px;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  letter-spacing: 0.5px;
 }
 
 /* TOP NAV */
 .top-nav a {
-  margin-left: 15px;
+  margin-left: 22px;
   text-decoration: none;
-  color: #0b5e4e;
-  font-weight: 500;
-  cursor: pointer;
+  color: var(--muted);
+  font-size: 14px;
+  position: relative;
+}
+
+.top-nav a:hover {
+  color: var(--text);
 }
 
 /* LAYOUT */
 .container {
-  display: flex;
-  height: calc(100vh - 60px);
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  height: calc(100vh - 64px);
 }
 
-/* LEFT NAV */
+/* SIDEBAR */
 .sidebar {
-  width: 260px;
-  background: #ffffff;
-  border-right: 1px solid #ddd;
-  padding: 15px;
+  background: var(--panel);
+  border-right: 1px solid var(--border);
+  padding: 20px;
   overflow-y: auto;
 }
 
-.folder {
-  margin-bottom: 10px;
+/* BOARD */
+.board {
+  margin-bottom: 14px;
 }
 
-.folder-title {
-  font-weight: bold;
+.board-title {
+  padding: 12px 14px;
+  border-radius: var(--radius);
+  font-weight: 600;
   cursor: pointer;
-  padding: 8px;
-  background: #eef5f3;
-  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background 0.25s ease;
 }
 
-.subjects {
-  margin-left: 15px;
+.board-title:hover {
+  background: #f1f5f9;
+}
+
+.board-content {
+  margin-top: 8px;
+  padding-left: 12px;
   display: none;
+  animation: fadeIn 0.25s ease forwards;
 }
 
+/* SUBJECT */
 .subject {
-  margin-top: 6px;
+  margin-bottom: 6px;
 }
 
 .subject-title {
+  padding: 8px 12px;
+  font-size: 14px;
+  color: var(--accent);
   cursor: pointer;
-  color: #0b5e4e;
-  font-weight: 500;
+  border-radius: 10px;
+  transition: background 0.2s ease;
+}
+
+.subject-title:hover {
+  background: #ecfdf5;
 }
 
 .files {
-  margin-left: 15px;
+  padding-left: 16px;
   display: none;
 }
 
-.files div {
+/* FILE */
+.file {
+  font-size: 13px;
+  padding: 6px 10px;
+  color: var(--muted);
   cursor: pointer;
-  padding: 4px 0;
-  color: #333;
+  border-radius: 8px;
+  transition: all 0.2s ease;
 }
 
-/* RIGHT CONTENT */
+.file:hover {
+  background: #f1f5f9;
+  color: var(--text);
+  transform: translateX(4px);
+}
+
+/* CONTENT */
 .content {
-  flex: 1;
-  padding: 15px;
+  padding: 24px;
 }
 
-iframe {
+.viewer {
   width: 100%;
   height: 100%;
-  border: none;
-  background: white;
+  border-radius: var(--radius);
+  background: var(--panel);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
 }
 
 /* FOOTER */
 footer {
   text-align: center;
-  padding: 10px;
-  background: #ffffff;
-  border-top: 1px solid #ddd;
-  font-size: 14px;
+  padding: 14px;
+  font-size: 13px;
+  color: var(--muted);
+  border-top: 1px solid var(--border);
+  background: var(--panel);
+}
+
+/* ANIMATIONS */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 </style>
 </head>
@@ -141,68 +202,50 @@ footer {
     My Exam Mentor
   </div>
 
-  <div class="top-nav">
+  <nav class="top-nav">
     <a onclick="loadPage('intro')">Introduction</a>
-    <a onclick="loadPage('about')">About Us</a>
-  </div>
+    <a onclick="loadPage('about')">About</a>
+  </nav>
 </header>
 
 <div class="container">
-  <!-- LEFT SIDEBAR -->
-  <div class="sidebar">
 
-    <!-- IGCSE -->
-    <div class="folder">
-      <div class="folder-title" onclick="toggle(this)">IGCSE</div>
-      <div class="subjects">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <div class="board">
+      <div class="board-title" onclick="toggle(this)">IGCSE</div>
+      <div class="board-content">
+
         <div class="subject">
           <div class="subject-title" onclick="toggle(this)">Maths</div>
           <div class="files">
-            <div onclick="loadPDF('pdfs/igcse/maths/sample.pdf')">Sample PDF</div>
+            <div class="file" onclick="loadPDF('pdfs/igcse/maths/sample.pdf')">Sample PDF</div>
           </div>
         </div>
 
         <div class="subject">
           <div class="subject-title" onclick="toggle(this)">English</div>
           <div class="files">
-            <div onclick="loadPDF('pdfs/igcse/english/sample.pdf')">Sample PDF</div>
+            <div class="file" onclick="loadPDF('pdfs/igcse/english/sample.pdf')">Sample PDF</div>
           </div>
         </div>
+
       </div>
     </div>
 
-    <!-- CBSE -->
-    <div class="folder">
-      <div class="folder-title" onclick="toggle(this)">CBSE</div>
-      <div class="subjects">
-        <div class="subject">
-          <div class="subject-title" onclick="toggle(this)">Maths</div>
-          <div class="files">
-            <div onclick="loadPDF('pdfs/cbse/maths/sample.pdf')">Sample PDF</div>
-          </div>
-        </div>
-      </div>
+    <div class="board">
+      <div class="board-title" onclick="toggle(this)">CBSE</div>
+      <div class="board-content"></div>
     </div>
 
-    <!-- SSC -->
-    <div class="folder">
-      <div class="folder-title" onclick="toggle(this)">SSC</div>
-      <div class="subjects">
-        <div class="subject">
-          <div class="subject-title" onclick="toggle(this)">English</div>
-          <div class="files">
-            <div onclick="loadPDF('pdfs/ssc/english/sample.pdf')">Sample PDF</div>
-          </div>
-        </div>
-      </div>
-    </div>
+  </aside>
 
-  </div>
+  <!-- CONTENT -->
+  <main class="content">
+    <iframe class="viewer" id="viewer"></iframe>
+  </main>
 
-  <!-- RIGHT CONTENT -->
-  <div class="content">
-    <iframe id="viewer" src=""></iframe>
-  </div>
 </div>
 
 <footer>
@@ -210,9 +253,9 @@ footer {
 </footer>
 
 <script>
-function toggle(element) {
-  const next = element.nextElementSibling;
-  next.style.display = next.style.display === "block" ? "none" : "block";
+function toggle(el) {
+  const target = el.nextElementSibling;
+  target.style.display = target.style.display === "block" ? "none" : "block";
 }
 
 function loadPDF(path) {
@@ -220,14 +263,11 @@ function loadPDF(path) {
 }
 
 function loadPage(type) {
-  if (type === "intro") {
-    document.getElementById("viewer").srcdoc =
-      "<h2>Introduction</h2><p>Welcome to My Exam Mentor.</p>";
-  }
-  if (type === "about") {
-    document.getElementById("viewer").srcdoc =
-      "<h2>About Us</h2><p>My Exam Mentor helps students access exam resources easily.</p>";
-  }
+  const viewer = document.getElementById("viewer");
+  viewer.srcdoc =
+    type === "intro"
+      ? "<h2 style='padding:20px'>Welcome to My Exam Mentor</h2>"
+      : "<h2 style='padding:20px'>About Us</h2>";
 }
 </script>
 
