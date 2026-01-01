@@ -4,7 +4,6 @@ BASE_DIR="pdfs"
 OUT_FILE="pdf-index.json"
 
 echo "{" > "$OUT_FILE"
-
 board_first=true
 
 for board in "$BASE_DIR"/*; do
@@ -25,10 +24,10 @@ for board in "$BASE_DIR"/*; do
       [ -d "$year" ] || continue
       year_name=$(basename "$year")
 
-      # Collect PDFs safely (handles spaces)
-      pdf_list=$(find "$year" -maxdepth 1 -type f -name "*.pdf" | sort)
+      # Get PDFs safely (spaces supported)
+      pdfs=$(find "$year" -maxdepth 1 -type f -name "*.pdf" | sort)
 
-      [ -z "$pdf_list" ] && continue
+      [ -z "$pdfs" ] && continue
 
       [ "$year_first" = true ] || subject_json="$subject_json,"
       year_first=false
@@ -37,7 +36,7 @@ for board in "$BASE_DIR"/*; do
         \"$year_name\": ["
 
       pdf_first=true
-      echo "$pdf_list" | while IFS= read -r pdf; do
+      echo "$pdfs" | while IFS= read -r pdf; do
         pdf_name=$(basename "$pdf")
         [ "$pdf_first" = true ] || subject_json="$subject_json,"
         pdf_first=false
@@ -70,4 +69,4 @@ done
 
 echo "}" >> "$OUT_FILE"
 
-echo "✔ pdf-index.json generated dynamically from folders"
+echo "✔ pdf-index.json generated for HTML sidebar + tabs"
