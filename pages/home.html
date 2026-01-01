@@ -2,228 +2,170 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<title>My Exam Mentor – Home</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Exam Mentor</title>
 
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Segoe UI", Arial, sans-serif;
+:root {
+  --green1: #3d9d6f;
+  --green2: #6fd19b;
+  --bg: #f7fdf6;
+  --card: #ffffff;
+  --text: #0f172a;
+  --muted: #475569;
 }
 
 body {
-  background: #f4fdf7;
-  color: #1f2937;
+  margin: 0;
+  font-family: Inter, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
 }
 
-/* HERO SECTION */
 .hero {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #16a34a, #22c55e);
+  background: linear-gradient(135deg, var(--green1), var(--green2));
   color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  padding: 80px 30px;
   text-align: center;
-  padding: 40px 20px;
-}
-
-.hero-content {
-  max-width: 900px;
-}
-
-.hero-icon {
-  font-size: 64px;
-  margin-bottom: 20px;
+  border-radius: 16px;
 }
 
 .hero h1 {
-  font-size: 3rem;
-  font-weight: 800;
-  margin-bottom: 15px;
+  font-size: 40px;
+  margin-bottom: 12px;
 }
 
-.hero p.sub {
-  font-size: 1.3rem;
-  margin-bottom: 25px;
+.hero p {
+  font-size: 18px;
+  max-width: 700px;
+  margin: auto;
   opacity: 0.95;
 }
 
-.hero p.desc {
-  font-size: 1.05rem;
-  line-height: 1.6;
-  max-width: 700px;
-  margin: auto;
-  opacity: 0.9;
-}
-
-/* SECTION */
 .section {
-  padding: 80px 20px;
+  margin: 40px auto;
+  max-width: 900px;
+  padding: 0 20px;
 }
 
 .section h2 {
   text-align: center;
-  font-size: 2.3rem;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
 }
 
-/* FEATURES */
 .features {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 40px;
-  max-width: 1000px;
-  margin: auto;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
 }
 
-.feature {
-  background: white;
-  padding: 35px;
-  border-radius: 20px;
+.card {
+  background: var(--card);
+  padding: 24px;
+  border-radius: 14px;
   text-align: center;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.05);
 }
 
-.feature-icon {
-  width: 70px;
-  height: 70px;
-  background: #dcfce7;
-  color: #16a34a;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 28px;
-  margin: auto;
-  margin-bottom: 20px;
+.card h3 {
+  margin-bottom: 8px;
+  color: var(--green1);
 }
 
-.feature h3 {
-  font-size: 1.25rem;
-  margin-bottom: 10px;
-}
-
-/* HOW IT WORKS */
 .steps {
-  max-width: 700px;
-  margin: auto;
+  display: grid;
+  gap: 20px;
 }
 
 .step {
   display: flex;
-  align-items: flex-start;
-  margin-bottom: 40px;
+  gap: 16px;
+  align-items: center;
+  background: var(--card);
+  padding: 18px;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.04);
 }
 
-.step-number {
-  width: 45px;
-  height: 45px;
-  background: #22c55e;
+.step span {
+  background: var(--green1);
   color: white;
-  border-radius: 50%;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 50%;
   font-weight: bold;
-  margin-right: 20px;
-  flex-shrink: 0;
-}
-
-.step h4 {
-  font-size: 1.2rem;
-  margin-bottom: 5px;
-}
-
-/* FOOTER SPACE */
-.spacer {
-  height: 60px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-content">
-    <div class="hero-icon">🎓</div>
-    <h1>Welcome to My Exam Mentor</h1>
-    <p class="sub">Your Complete Exam Preparation Partner</p>
-    <p class="desc">
-      Access trusted past examination papers for IGCSE, CBSE, and SSC boards.
-      Practice smarter with authentic resources and boost your confidence for exams.
-    </p>
-  </div>
-</section>
+<div class="hero">
+  <h1>Welcome to My Exam Mentor</h1>
+  <p>Your complete exam preparation platform for IGCSE, CBSE, and SSC students.</p>
+</div>
 
-<!-- WHY CHOOSE -->
-<section class="section">
+<div class="section">
   <h2>Why Choose My Exam Mentor?</h2>
 
   <div class="features">
-    <div class="feature">
-      <div class="feature-icon">📄</div>
-      <h3>Comprehensive Collection</h3>
-      <p>Years of past papers across boards and subjects.</p>
+    <div class="card">
+      <h3>Comprehensive Papers</h3>
+      <p>Access years of authentic past examination papers.</p>
     </div>
 
-    <div class="feature">
-      <div class="feature-icon">⬇️</div>
+    <div class="card">
       <h3>Easy Access</h3>
-      <p>Download question papers, mark schemes, and reports instantly.</p>
+      <p>Instant viewing and downloading of PDFs.</p>
     </div>
 
-    <div class="feature">
-      <div class="feature-icon">⏰</div>
+    <div class="card">
       <h3>Regular Updates</h3>
-      <p>Latest exam papers added as soon as they are released.</p>
+      <p>Latest papers added as soon as they are available.</p>
     </div>
   </div>
-</section>
+</div>
 
-<!-- HOW IT WORKS -->
-<section class="section" style="background:#ecfdf5;">
+<div class="section">
   <h2>How It Works</h2>
 
   <div class="steps">
     <div class="step">
-      <div class="step-number">1</div>
+      <span>1</span>
       <div>
-        <h4>Choose Your Board</h4>
-        <p>Select from IGCSE, CBSE, or SSC.</p>
+        <strong>Choose Your Board</strong><br>
+        Select IGCSE, CBSE, or SSC
       </div>
     </div>
 
     <div class="step">
-      <div class="step-number">2</div>
+      <span>2</span>
       <div>
-        <h4>Pick Your Subject</h4>
-        <p>Browse all available subjects easily.</p>
+        <strong>Pick Your Subject</strong><br>
+        Browse available subjects
       </div>
     </div>
 
     <div class="step">
-      <div class="step-number">3</div>
+      <span>3</span>
       <div>
-        <h4>Select Papers</h4>
-        <p>Choose the year and exam session.</p>
+        <strong>Select Papers</strong><br>
+        Choose year and session
       </div>
     </div>
 
     <div class="step">
-      <div class="step-number">4</div>
+      <span>4</span>
       <div>
-        <h4>Download & Practice</h4>
-        <p>Practice effectively and score higher.</p>
+        <strong>Practice & Excel</strong><br>
+        Study smart and score higher
       </div>
     </div>
   </div>
-</section>
-
-<div class="spacer"></div>
+</div>
 
 </body>
 </html>
