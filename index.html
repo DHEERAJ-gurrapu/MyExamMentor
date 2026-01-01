@@ -66,7 +66,7 @@ header {
   position: relative;
 }
 
-.menu button {
+.menu-btn {
   background: none;
   border: none;
   cursor: pointer;
@@ -77,38 +77,49 @@ header {
   gap: 6px;
 }
 
-.menu button::after {
+.menu-btn::after {
   content: "▾";
   color: var(--accent);
+  transition: transform 0.25s;
+}
+
+.menu.open .menu-btn::after {
+  transform: rotate(180deg);
 }
 
 .menu-content {
   position: absolute;
   right: 0;
-  top: 42px;
+  top: 46px;
   background: var(--panel);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  box-shadow: 0 8px 20px var(--shadow);
-  display: none;
-  min-width: 180px;
+  box-shadow: 0 12px 28px var(--shadow);
+  min-width: 200px;
   overflow: hidden;
-  z-index: 10;
+  opacity: 0;
+  transform: translateY(-10px) scale(0.95);
+  pointer-events: none;
+  transition: all 0.25s ease;
+  z-index: 20;
+}
+
+.menu.open .menu-content {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
 }
 
 .menu-content div {
-  padding: 10px 14px;
+  padding: 12px 16px;
   cursor: pointer;
   font-size: 14px;
+  transition: background 0.2s;
 }
 
 .menu-content div:hover {
   background: #e6f4e9;
   color: var(--accent);
-}
-
-.menu:hover .menu-content {
-  display: block;
 }
 
 /* LAYOUT */
@@ -136,9 +147,7 @@ details summary {
   position: relative;
 }
 
-details summary::marker {
-  display: none;
-}
+details summary::marker { display: none; }
 
 details summary::after {
   content: "▸";
@@ -227,9 +236,10 @@ footer {
 
   <div class="site-title">My Exam Mentor</div>
 
-  <div class="menu">
-    <button>Menu</button>
+  <div class="menu" id="menu">
+    <button class="menu-btn" onclick="toggleMenu()">Menu</button>
     <div class="menu-content">
+      <div onclick="loadPage('home.html')">Home</div>
       <div onclick="loadPage('introduction.html')">Introduction</div>
       <div onclick="loadPage('contact.html')">Contact Us</div>
     </div>
@@ -240,7 +250,8 @@ footer {
   <aside class="sidebar" id="sidebar"></aside>
 
   <main class="content">
-    <iframe id="viewer"></iframe>
+    <!-- DEFAULT HOME LOAD -->
+    <iframe id="viewer" src="pages/home.html"></iframe>
   </main>
 </div>
 
@@ -249,6 +260,17 @@ footer {
 </footer>
 
 <script>
+/* MENU */
+function toggleMenu() {
+  document.getElementById('menu').classList.toggle('open');
+}
+
+document.addEventListener('click', e => {
+  const menu = document.getElementById('menu');
+  if (!menu.contains(e.target)) menu.classList.remove('open');
+});
+
+/* SIDEBAR */
 fetch('pdf-index.json')
   .then(res => res.json())
   .then(data => buildSidebar(data));
@@ -292,8 +314,10 @@ function buildSidebar(data) {
   }
 }
 
+/* PAGE LOAD */
 function loadPage(page) {
   document.getElementById('viewer').src = `pages/${page}`;
+  document.getElementById('menu').classList.remove('open');
 }
 </script>
 
