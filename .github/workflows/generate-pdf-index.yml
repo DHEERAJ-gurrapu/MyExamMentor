@@ -16,15 +16,12 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-
       - name: Generate pdf-index.json
-        run: node scripts/generate-pdf-index.js
+        run: |
+          chmod +x scripts/generate-pdf-index.sh
+          ./scripts/generate-pdf-index.sh
 
-      - name: Commit pdf-index.json
+      - name: Commit generated file
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
