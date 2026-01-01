@@ -1,9 +1,11 @@
-name: Generate PDF Index and Push Json
+name: Generate PDF Index
 
 on:
   push:
     branches:
       - main
+    paths-ignore:
+      - 'pdf-index.json'   # 🔒 prevent infinite loop
 
 permissions:
   contents: write
@@ -13,24 +15,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo (full history)
+      - name: Checkout repository (full history)
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0   # 🔥 VERY IMPORTANT
+          fetch-depth: 0   # 🔥 REQUIRED for rebase
 
       - name: Generate pdf-index.json
         run: |
           chmod +x scripts/generate-pdf-index.sh
           ./scripts/generate-pdf-index.sh
 
-      - name: Commit & push generated file
+      - name: Commit and push pdf-index.json
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
 
-          git add pdf-index.json
-          git commit -m "Auto-generate pdf-index.json" || echo "No changes"
+          # 🔥 Discard any accidental script changes
+          git checkout -- scripts/generate-pdf-index.sh
 
-          # 🔑 Rebase with remote before pushing
+          # Add ONLY generated file
+          git add pdf-index.json
+          git commit -m "Auto-generate pdf-index.json" || echo "No changes to commit"
+
+          # Rebase with latest main to avoid conflicts
           git pull --rebase origin main
+
+          # Push safely
           git push origin main
