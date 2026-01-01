@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - main
-    paths-ignore:
-      - 'pdf-index.json'   # 🔒 prevent infinite loop
 
 permissions:
   contents: write
@@ -20,10 +18,26 @@ jobs:
         with:
           fetch-depth: 0   # 🔥 REQUIRED for rebase
 
+      - name: Show pdf-index.json BEFORE generation
+        run: |
+          echo "===== pdf-index.json BEFORE ====="
+          if [ -f pdf-index.json ]; then
+            cat pdf-index.json
+          else
+            echo "pdf-index.json does not exist yet"
+          fi
+          echo "================================="
+
       - name: Generate pdf-index.json
         run: |
           chmod +x scripts/generate-pdf-index.sh
           ./scripts/generate-pdf-index.sh
+
+      - name: Show pdf-index.json AFTER generation
+        run: |
+          echo "===== pdf-index.json AFTER ====="
+          cat pdf-index.json
+          echo "================================"
 
       - name: Commit and push pdf-index.json
         run: |
