@@ -1,4 +1,4 @@
-name: Generate PDF Index
+name: Generate PDF Index and Push Json
 
 on:
   push:
@@ -13,18 +13,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repo (full history)
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # 🔥 VERY IMPORTANT
 
       - name: Generate pdf-index.json
         run: |
           chmod +x scripts/generate-pdf-index.sh
           ./scripts/generate-pdf-index.sh
 
-      - name: Commit generated file
+      - name: Commit & push generated file
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
+
           git add pdf-index.json
           git commit -m "Auto-generate pdf-index.json" || echo "No changes"
-          git push
+
+          # 🔑 Rebase with remote before pushing
+          git pull --rebase origin main
+          git push origin main
