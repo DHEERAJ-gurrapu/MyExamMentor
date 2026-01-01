@@ -24,10 +24,15 @@ for board in "$BASE_DIR"/*; do
       [ -d "$year" ] || continue
       year_name=$(basename "$year")
 
-      # Get PDFs safely (spaces supported)
-      pdfs=$(find "$year" -maxdepth 1 -type f -name "*.pdf" | sort)
+      # Collect ALL files (not folders)
+      files=""
+      for f in "$year"/*; do
+        [ -f "$f" ] || continue
+        files="yes"
+        break
+      done
 
-      [ -z "$pdfs" ] && continue
+      [ -z "$files" ] && continue
 
       [ "$year_first" = true ] || subject_json="$subject_json,"
       year_first=false
@@ -35,13 +40,16 @@ for board in "$BASE_DIR"/*; do
       subject_json="$subject_json
         \"$year_name\": ["
 
-      pdf_first=true
-      echo "$pdfs" | while IFS= read -r pdf; do
-        pdf_name=$(basename "$pdf")
-        [ "$pdf_first" = true ] || subject_json="$subject_json,"
-        pdf_first=false
+      file_first=true
+      for f in "$year"/*; do
+        [ -f "$f" ] || continue
+        fname=$(basename "$f")
+
+        [ "$file_first" = true ] || subject_json="$subject_json,"
+        file_first=false
+
         subject_json="$subject_json
-          \"$pdf_name\""
+          \"$fname\""
       done
 
       subject_json="$subject_json
@@ -69,4 +77,4 @@ done
 
 echo "}" >> "$OUT_FILE"
 
-echo "✔ pdf-index.json generated for HTML sidebar + tabs"
+echo "✔ pdf-index.json generated (files detected correctly)"
