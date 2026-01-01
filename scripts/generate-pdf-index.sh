@@ -5,67 +5,69 @@ OUT_FILE="pdf-index.json"
 
 echo "{" > "$OUT_FILE"
 
-first_board=true
+board_first=true
 
 for board in "$BASE_DIR"/*; do
   [ -d "$board" ] || continue
   board_name=$(basename "$board")
 
-  first_subject=true
-  board_content=""
+  subject_first=true
+  board_json=""
 
   for subject in "$board"/*; do
     [ -d "$subject" ] || continue
     subject_name=$(basename "$subject")
 
-    first_year=true
-    subject_content=""
+    year_first=true
+    subject_json=""
 
     for year in "$subject"/*; do
       [ -d "$year" ] || continue
       year_name=$(basename "$year")
 
-      pdfs=$(ls "$year"/*.pdf 2>/dev/null)
-      [ -z "$pdfs" ] && continue
+      # Collect PDFs safely (handles spaces)
+      pdf_list=$(find "$year" -maxdepth 1 -type f -name "*.pdf" | sort)
 
-      [ "$first_year" = true ] || subject_content="$subject_content,"
-      first_year=false
+      [ -z "$pdf_list" ] && continue
 
-      subject_content="$subject_content
+      [ "$year_first" = true ] || subject_json="$subject_json,"
+      year_first=false
+
+      subject_json="$subject_json
         \"$year_name\": ["
 
-      first_pdf=true
-      for pdf in $pdfs; do
+      pdf_first=true
+      echo "$pdf_list" | while IFS= read -r pdf; do
         pdf_name=$(basename "$pdf")
-        [ "$first_pdf" = true ] || subject_content="$subject_content,"
-        first_pdf=false
-        subject_content="$subject_content
+        [ "$pdf_first" = true ] || subject_json="$subject_json,"
+        pdf_first=false
+        subject_json="$subject_json
           \"$pdf_name\""
       done
 
-      subject_content="$subject_content
+      subject_json="$subject_json
         ]"
     done
 
-    [ -z "$subject_content" ] && continue
+    [ -z "$subject_json" ] && continue
 
-    [ "$first_subject" = true ] || board_content="$board_content,"
-    first_subject=false
+    [ "$subject_first" = true ] || board_json="$board_json,"
+    subject_first=false
 
-    board_content="$board_content
-      \"$subject_name\": {$subject_content
+    board_json="$board_json
+      \"$subject_name\": {$subject_json
       }"
   done
 
-  [ -z "$board_content" ] && continue
+  [ -z "$board_json" ] && continue
 
-  [ "$first_board" = true ] || echo "," >> "$OUT_FILE"
-  first_board=false
+  [ "$board_first" = true ] || echo "," >> "$OUT_FILE"
+  board_first=false
 
-  echo "  \"$board_name\": {$board_content
+  echo "  \"$board_name\": {$board_json
   }" >> "$OUT_FILE"
 done
 
 echo "}" >> "$OUT_FILE"
 
-echo "✔ pdf-index.json generated with YEAR support"
+echo "✔ pdf-index.json generated dynamically from folders"
