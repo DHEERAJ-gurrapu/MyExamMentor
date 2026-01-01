@@ -1,0 +1,29 @@
+{
+  "igcse": {
+    "maths": [
+      "paper1.pdf",
+      "paper2.pdf"
+    ],
+    "science": [
+      "paper11.pdf"
+    ]
+  },
+   "cbse": {
+    "maths": [
+      "paper1.pdf",
+      "paper2.pdf"
+    ],
+    "science": [
+      "paper11.pdf"
+    ]
+  },
+    "ssc": {
+    "maths": [
+      "paper1.pdf",
+      "paper2.pdf"
+    ],
+    "science": [
+      "paper11.pdf"
+    ]
+  }
+}
