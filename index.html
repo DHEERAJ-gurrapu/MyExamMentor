@@ -27,6 +27,9 @@
 body {
   background: var(--bg);
   color: var(--text);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 /* HEADER */
@@ -95,7 +98,8 @@ header {
 .container {
   display: grid;
   grid-template-columns: 280px 1fr;
-  height: calc(100vh - 64px);
+  flex: 1;
+  min-height: 0; /* allow flex children to shrink */
 }
 
 /* SIDEBAR */
@@ -160,6 +164,15 @@ details[open] > summary {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* BREADCRUMB */
+.breadcrumb {
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 6px;
 }
 
 /* TABS */
@@ -202,6 +215,7 @@ footer {
   color: var(--muted);
   border-top: 1px solid var(--border);
   background: var(--panel);
+  flex-shrink: 0; /* prevent shrinking */
 }
 </style>
 </head>
@@ -229,6 +243,7 @@ footer {
   <aside class="sidebar" id="sidebar"></aside>
 
   <main class="content">
+    <div class="breadcrumb" id="breadcrumb">Home</div>
     <div class="tabs" id="tabs"></div>
     <iframe id="viewer" src="pages/home.html"></iframe>
   </main>
@@ -246,6 +261,7 @@ function toggleMenu() {
 function loadPage(page) {
   document.getElementById('viewer').src = `pages/${page}`;
   document.getElementById('tabs').innerHTML = '';
+  document.getElementById('breadcrumb').textContent = page.replace('.html', '');
   document.getElementById('menu').classList.remove('open');
 }
 
@@ -290,11 +306,14 @@ function buildSidebar(data) {
   }
 }
 
-/* TABS + PDF */
+/* TABS + PDF + BREADCRUMB */
 function openYear(board, subject, year, pdfs) {
   const tabs = document.getElementById('tabs');
   const viewer = document.getElementById('viewer');
+  const breadcrumb = document.getElementById('breadcrumb');
   tabs.innerHTML = '';
+
+  breadcrumb.textContent = `${board.toUpperCase()} → ${subject} → ${year}`;
 
   pdfs.forEach((pdf, i) => {
     const tab = document.createElement('div');
