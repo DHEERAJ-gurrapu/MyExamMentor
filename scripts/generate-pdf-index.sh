@@ -11,52 +11,61 @@ for board in "$BASE_DIR"/*; do
   [ -d "$board" ] || continue
   board_name=$(basename "$board")
 
-  # Check if board has subjects with PDFs
-  has_content=false
-  for subject in "$board"/*; do
-    [ -d "$subject" ] || continue
-    if ls "$subject"/*.pdf >/dev/null 2>&1; then
-      has_content=true
-      break
-    fi
-  done
-
-  [ "$has_content" = false ] && continue
-
-  [ "$first_board" = true ] || echo "," >> "$OUT_FILE"
-  first_board=false
-
-  echo "  \"$board_name\": {" >> "$OUT_FILE"
-
   first_subject=true
+  board_content=""
+
   for subject in "$board"/*; do
     [ -d "$subject" ] || continue
     subject_name=$(basename "$subject")
 
-    pdfs=$(ls "$subject"/*.pdf 2>/dev/null)
-    [ -z "$pdfs" ] && continue
+    first_year=true
+    subject_content=""
 
-    [ "$first_subject" = true ] || echo "," >> "$OUT_FILE"
-    first_subject=false
+    for year in "$subject"/*; do
+      [ -d "$year" ] || continue
+      year_name=$(basename "$year")
 
-    echo "    \"$subject_name\": [" >> "$OUT_FILE"
+      pdfs=$(ls "$year"/*.pdf 2>/dev/null)
+      [ -z "$pdfs" ] && continue
 
-    first_pdf=true
-    for pdf in $pdfs; do
-      pdf_name=$(basename "$pdf")
+      [ "$first_year" = true ] || subject_content="$subject_content,"
+      first_year=false
 
-      [ "$first_pdf" = true ] || echo "," >> "$OUT_FILE"
-      first_pdf=false
+      subject_content="$subject_content
+        \"$year_name\": ["
 
-      echo "      \"$pdf_name\"" >> "$OUT_FILE"
+      first_pdf=true
+      for pdf in $pdfs; do
+        pdf_name=$(basename "$pdf")
+        [ "$first_pdf" = true ] || subject_content="$subject_content,"
+        first_pdf=false
+        subject_content="$subject_content
+          \"$pdf_name\""
+      done
+
+      subject_content="$subject_content
+        ]"
     done
 
-    echo "    ]" >> "$OUT_FILE"
+    [ -z "$subject_content" ] && continue
+
+    [ "$first_subject" = true ] || board_content="$board_content,"
+    first_subject=false
+
+    board_content="$board_content
+      \"$subject_name\": {$subject_content
+      }"
   done
 
-  echo "  }" >> "$OUT_FILE"
+  [ -z "$board_content" ] && continue
+
+  [ "$first_board" = true ] || echo "," >> "$OUT_FILE"
+  first_board=false
+
+  echo "  \"$board_name\": {$board_content
+  }" >> "$OUT_FILE"
 done
 
 echo "}" >> "$OUT_FILE"
 
-echo "✔ pdf-index.json generated"
+echo "✔ pdf-index.json generated with YEAR support"
