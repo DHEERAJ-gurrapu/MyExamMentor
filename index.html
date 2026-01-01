@@ -7,19 +7,28 @@
 
 <style>
 :root {
-  --bg: #f7fdf6;        /* very light green */
+  --bg: #f7fdf6;
   --panel: #ffffff;
   --border: #d1e7d3;
   --text: #0f172a;
   --muted: #4b5563;
-  --accent: #3d9d6f;    /* pastel green accent */
+  --accent: #3d9d6f;
   --radius: 12px;
   --shadow: rgba(0,0,0,0.08);
 }
 
 /* GLOBAL */
-* { box-sizing: border-box; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
-body { background: var(--bg); color: var(--text); }
+* {
+  box-sizing: border-box;
+  font-family: Inter, system-ui, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+}
 
 /* HEADER */
 header {
@@ -34,10 +43,17 @@ header {
 }
 
 /* LOGO */
-.logo { display: flex; align-items: center; gap: 10px; }
-.logo img { height: 36px; }
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 
-/* CENTER TITLE */
+.logo img {
+  height: 36px;
+}
+
+/* TITLE */
 .site-title {
   text-align: center;
   font-weight: 700;
@@ -45,7 +61,7 @@ header {
   color: var(--accent);
 }
 
-/* TOP-RIGHT MENU */
+/* MENU */
 .menu {
   position: relative;
 }
@@ -58,12 +74,11 @@ header {
   color: var(--muted);
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
 }
 
 .menu button::after {
-  content: '▾';
-  font-size: 12px;
+  content: "▾";
   color: var(--accent);
 }
 
@@ -85,7 +100,6 @@ header {
   padding: 10px 14px;
   cursor: pointer;
   font-size: 14px;
-  transition: background 0.2s;
 }
 
 .menu-content div:hover {
@@ -110,96 +124,72 @@ header {
   border-right: 1px solid var(--border);
   padding: 16px;
   overflow-y: auto;
-  box-shadow: inset -2px 0 8px rgba(0,0,0,0.02);
 }
 
-/* DETAILS / CHEVRONS */
+/* COLLAPSIBLE */
 details summary {
   cursor: pointer;
   padding: 10px 12px;
   font-weight: 600;
-  position: relative;
-  list-style: none;
   border-radius: var(--radius);
-  transition: background 0.2s;
+  list-style: none;
+  position: relative;
 }
 
-details[open] > summary { background: #e6f4e9; }
+details summary::marker {
+  display: none;
+}
 
-details summary::marker { display: none; }
 details summary::after {
-  content: '▸';
+  content: "▸";
   position: absolute;
   right: 12px;
   transition: transform 0.2s;
 }
 
-details[open] summary::after { transform: rotate(90deg); }
+details[open] summary::after {
+  transform: rotate(90deg);
+}
 
+details[open] > summary {
+  background: #e6f4e9;
+}
+
+/* SUBJECT */
 .subject summary {
   font-weight: 500;
   color: var(--accent);
-  padding-left: 24px;
+  padding-left: 22px;
 }
 
-/* FILES */
+/* FILE */
 .file {
   padding: 6px 20px;
+  margin-left: 12px;
   font-size: 14px;
   color: var(--muted);
   cursor: pointer;
   border-radius: 8px;
-  transition: all 0.2s;
-  margin-left: 12px;
 }
 
 .file:hover {
   background: #e6f4e9;
   color: var(--accent);
-  transform: translateX(4px);
 }
 
 /* CONTENT */
 .content {
   padding: 20px;
   background: var(--bg);
-  display: flex;
-  flex-direction: column;
 }
 
 iframe {
   width: 100%;
-  height: calc(100% - 40px);
+  height: 100%;
   border: none;
   border-radius: var(--radius);
+  background: var(--panel);
   box-shadow: 0 10px 25px rgba(0,0,0,.04);
-  background: var(--panel);
-  margin-top: 10px;
-}
-
-/* TABS */
-.tabs {
-  display: flex;
-  gap: 6px;
-  margin-bottom: 8px;
-  flex-wrap: wrap;
-}
-
-.tab {
-  padding: 6px 12px;
-  background: var(--panel);
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  cursor: pointer;
-  font-size: 14px;
-  color: var(--accent);
-  transition: all 0.2s;
-}
-
-.tab.active {
-  background: var(--accent);
-  color: #fff;
-  font-weight: 600;
 }
 
 /* FOOTER */
@@ -210,17 +200,18 @@ footer {
   color: var(--muted);
   border-top: 1px solid var(--border);
   background: var(--panel);
-  box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
 }
 
-/* SCROLLBAR LIGHT */
+/* SCROLLBAR */
 .sidebar::-webkit-scrollbar {
   width: 8px;
 }
+
 .sidebar::-webkit-scrollbar-thumb {
   background: var(--accent);
   border-radius: 8px;
 }
+
 .sidebar::-webkit-scrollbar-track {
   background: #f0fdf4;
 }
@@ -231,7 +222,7 @@ footer {
 
 <header>
   <div class="logo">
-    <img src="mem.png" alt="MEM">
+    <img src="mem1.png" alt="MEM">
   </div>
 
   <div class="site-title">My Exam Mentor</div>
@@ -247,8 +238,8 @@ footer {
 
 <div class="container">
   <aside class="sidebar" id="sidebar"></aside>
+
   <main class="content">
-    <div class="tabs" id="tabs"></div>
     <iframe id="viewer"></iframe>
   </main>
 </div>
@@ -266,7 +257,6 @@ function titleCase(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-// Build the left sidebar with collapsibles
 function buildSidebar(data) {
   const sidebar = document.getElementById('sidebar');
 
@@ -284,9 +274,15 @@ function buildSidebar(data) {
       subjectSummary.textContent = titleCase(subject);
       subjectDetails.appendChild(subjectSummary);
 
-      // On clicking subject, dynamically generate tabs for all PDFs
-      subjectSummary.addEventListener('click', () => {
-        createTabs(data[board][subject], board, subject);
+      data[board][subject].forEach(pdf => {
+        const div = document.createElement('div');
+        div.className = 'file';
+        div.textContent = pdf;
+        div.onclick = () => {
+          document.getElementById('viewer').src =
+            `pdfs/${board}/${subject}/${pdf}`;
+        };
+        subjectDetails.appendChild(div);
       });
 
       boardDetails.appendChild(subjectDetails);
@@ -296,39 +292,8 @@ function buildSidebar(data) {
   }
 }
 
-// Create dynamic tabs on the right for PDFs
-function createTabs(pdfList, board, subject) {
-  const tabsContainer = document.getElementById('tabs');
-  const iframe = document.getElementById('viewer');
-
-  tabsContainer.innerHTML = ''; // clear existing tabs
-
-  pdfList.forEach((pdf, index) => {
-    const tab = document.createElement('div');
-    tab.className = 'tab';
-    tab.textContent = pdf;
-
-    tab.addEventListener('click', () => {
-      // Remove active from all tabs
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-      // Load PDF in iframe
-      iframe.src = `pdfs/${board}/${subject}/${pdf}`;
-    });
-
-    // Automatically click the first tab
-    if (index === 0) tab.click();
-
-    tabsContainer.appendChild(tab);
-  });
-}
-
-// Top menu navigation
 function loadPage(page) {
-  const iframe = document.getElementById('viewer');
-  const tabs = document.getElementById('tabs');
-  tabs.innerHTML = ''; // clear tabs if any
-  iframe.src = `pages/${page}`;
+  document.getElementById('viewer').src = `pages/${page}`;
 }
 </script>
 
