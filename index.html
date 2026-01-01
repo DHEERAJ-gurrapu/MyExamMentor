@@ -13,8 +13,6 @@
   --text: #0f172a;
   --muted: #4b5563;
   --accent: #3d9d6f;
-  --radius: 12px;
-  --shadow: rgba(0,0,0,0.08);
 }
 
 /* GLOBAL */
@@ -39,46 +37,13 @@ header {
   align-items: center;
   padding: 0 24px;
   border-bottom: 1px solid var(--border);
-  box-shadow: 0 4px 10px var(--shadow);
 }
-
-/* LOGO */
-.logo img { height: 36px; }
 
 /* TITLE */
 .site-title {
   text-align: center;
   font-weight: 700;
   font-size: 20px;
-  color: var(--accent);
-}
-
-/* MENU */
-.menu { position: relative; }
-.menu-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: var(--muted);
-}
-.menu-content {
-  position: absolute;
-  right: 0;
-  top: 46px;
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  box-shadow: 0 12px 28px var(--shadow);
-  min-width: 200px;
-  display: none;
-}
-.menu.open .menu-content { display: block; }
-.menu-content div {
-  padding: 12px 16px;
-  cursor: pointer;
-}
-.menu-content div:hover {
-  background: #e6f4e9;
   color: var(--accent);
 }
 
@@ -97,74 +62,75 @@ header {
   overflow-y: auto;
 }
 
-/* COLLAPSIBLE */
+/* CHEVRON DROPDOWNS */
 details summary {
   cursor: pointer;
   padding: 10px 12px;
   font-weight: 600;
   list-style: none;
-  border-radius: var(--radius);
+  position: relative;
 }
-details[open] > summary { background: #e6f4e9; }
 
-/* SUBJECT */
+details summary::after {
+  content: "▸";
+  position: absolute;
+  right: 12px;
+  transition: transform 0.2s;
+}
+
+details[open] summary::after {
+  transform: rotate(90deg);
+}
+
 .subject summary {
+  padding-left: 18px;
   font-weight: 500;
   color: var(--accent);
-  padding-left: 20px;
 }
 
-/* YEAR */
-.year {
-  padding: 6px 30px;
+.year summary {
+  padding-left: 34px;
   font-size: 14px;
-  cursor: pointer;
-  color: var(--muted);
-  border-radius: 8px;
-}
-.year:hover {
-  background: #e6f4e9;
-  color: var(--accent);
+  font-weight: 500;
 }
 
 /* CONTENT */
 .content {
-  padding: 12px;
-  background: var(--bg);
   display: flex;
   flex-direction: column;
+  background: var(--bg);
 }
 
-/* TABS */
+/* TAB BAR */
 .tabs {
   display: flex;
-  gap: 6px;
-  margin-bottom: 10px;
-  overflow-x: auto;
+  border-bottom: 2px solid var(--border);
+  background: var(--panel);
 }
 
 .tab {
-  padding: 8px 14px;
-  background: #e6f4e9;
-  border-radius: 999px;
-  font-size: 13px;
+  padding: 12px 18px;
   cursor: pointer;
-  white-space: nowrap;
-  transition: all 0.2s;
+  font-size: 14px;
+  color: var(--muted);
+  border-bottom: 3px solid transparent;
+}
+
+.tab:hover {
+  background: #f0fdf4;
 }
 
 .tab.active {
-  background: var(--accent);
-  color: white;
+  color: var(--accent);
+  border-bottom: 3px solid var(--accent);
+  font-weight: 600;
 }
 
-/* PDF */
+/* PDF VIEW */
 iframe {
   flex: 1;
-  width: 100%;
   border: none;
-  border-radius: var(--radius);
-  background: var(--panel);
+  background: white;
 }
 
 /* FOOTER */
@@ -181,41 +147,25 @@ footer {
 <body>
 
 <header>
-  <div class="logo">
-    <img src="mem1.png" alt="MEM">
-  </div>
-
+  <div></div>
   <div class="site-title">My Exam Mentor</div>
-
-  <div class="menu" id="menu">
-    <button class="menu-btn" onclick="toggleMenu()">Menu ▾</button>
-    <div class="menu-content">
-      <div onclick="loadPage('home.html')">Home</div>
-      <div onclick="loadPage('introduction.html')">Introduction</div>
-      <div onclick="loadPage('contact.html')">Contact Us</div>
-    </div>
-  </div>
+  <div></div>
 </header>
 
 <div class="container">
   <aside class="sidebar" id="sidebar"></aside>
 
   <main class="content">
-    <div id="tabs" class="tabs"></div>
+    <div class="tabs" id="tabs"></div>
     <iframe id="viewer" src="pages/home.html"></iframe>
   </main>
 </div>
 
 <footer>
-  © 2026 My Exam Mentor. All rights reserved.
+  © 2026 My Exam Mentor
 </footer>
 
 <script>
-function toggleMenu() {
-  document.getElementById('menu').classList.toggle('open');
-}
-
-/* LOAD JSON */
 fetch('pdf-index.json')
   .then(res => res.json())
   .then(data => buildSidebar(data));
@@ -237,12 +187,19 @@ function buildSidebar(data) {
       sd.appendChild(ss);
 
       for (const year in data[board][subject]) {
-        const y = document.createElement('div');
-        y.className = 'year';
-        y.textContent = year;
-        y.onclick = () =>
-          openYear(board, subject, year, data[board][subject][year]);
-        sd.appendChild(y);
+        const yd = document.createElement('details');
+        yd.className = 'year';
+        const ys = document.createElement('summary');
+        ys.textContent = year;
+        yd.appendChild(ys);
+
+        yd.addEventListener('toggle', () => {
+          if (yd.open) {
+            openYear(board, subject, year, data[board][subject][year]);
+          }
+        });
+
+        sd.appendChild(yd);
       }
 
       bd.appendChild(sd);
@@ -271,12 +228,6 @@ function openYear(board, subject, year, pdfs) {
   });
 
   viewer.src = `pdfs/${board}/${subject}/${year}/${pdfs[0]}`;
-}
-
-function loadPage(page) {
-  document.getElementById('tabs').innerHTML = '';
-  document.getElementById('viewer').src = `pages/${page}`;
-  document.getElementById('menu').classList.remove('open');
 }
 </script>
 
