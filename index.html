@@ -7,89 +7,164 @@
 
 <style>
 :root {
-  --bg:#fafafa;
-  --panel:#fff;
-  --border:#e5e7eb;
-  --text:#0f172a;
-  --muted:#64748b;
-  --accent:#0b5e4e;
-  --radius:12px;
+  --bg: #fafafa;
+  --panel: #ffffff;
+  --border: #e5e7eb;
+  --text: #0f172a;
+  --muted: #64748b;
+  --accent: #0b5e4e;
+  --radius: 12px;
 }
 
-* { box-sizing:border-box; font-family:Inter,system-ui,sans-serif; }
+* {
+  box-sizing: border-box;
+  font-family: Inter, system-ui, sans-serif;
+}
 
-body { margin:0; background:var(--bg); color:var(--text); }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+}
 
+/* HEADER */
 header {
-  height:64px;
-  background:var(--panel);
-  border-bottom:1px solid var(--border);
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 24px;
+  height: 64px;
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  padding: 0 24px;
 }
 
-.logo { display:flex; gap:10px; font-weight:600; }
-.logo-box {
-  width:38px;height:38px;border-radius:10px;
-  background:var(--accent);color:#fff;
-  display:grid;place-items:center;
+/* LOGO */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
+.logo img {
+  height: 36px;
+}
+
+/* TITLE CENTER */
+.site-title {
+  text-align: center;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+/* DROPDOWN */
+.menu {
+  position: relative;
+}
+
+.menu button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.menu-content {
+  position: absolute;
+  right: 0;
+  top: 42px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 10px 30px rgba(0,0,0,.06);
+  display: none;
+  min-width: 160px;
+}
+
+.menu-content div {
+  padding: 10px 14px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.menu-content div:hover {
+  background: #f1f5f9;
+}
+
+.menu:hover .menu-content {
+  display: block;
+}
+
+/* LAYOUT */
 .container {
-  display:grid;
-  grid-template-columns:280px 1fr;
-  height:calc(100vh - 64px);
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  height: calc(100vh - 64px);
 }
 
+/* SIDEBAR */
 .sidebar {
-  background:var(--panel);
-  border-right:1px solid var(--border);
-  padding:16px;
-  overflow:auto;
+  background: var(--panel);
+  border-right: 1px solid var(--border);
+  padding: 16px;
+  overflow-y: auto;
 }
 
+/* DETAILS */
 details summary {
-  cursor:pointer;
-  padding:8px;
-  font-weight:600;
-  color:var(--accent);
-  list-style:none;
+  cursor: pointer;
+  padding: 8px;
+  font-weight: 600;
+  list-style: none;
 }
 
-details summary::-webkit-details-marker { display:none; }
+details summary::-webkit-details-marker {
+  display: none;
+}
 
+/* SUBJECT */
+.subject summary {
+  font-weight: 500;
+  color: var(--accent);
+  padding-left: 12px;
+}
+
+/* FILE */
 .file {
-  padding:6px 10px;
-  font-size:14px;
-  color:var(--muted);
-  cursor:pointer;
-  border-radius:8px;
+  padding: 6px 16px;
+  font-size: 14px;
+  color: var(--muted);
+  cursor: pointer;
+  border-radius: 8px;
 }
 
 .file:hover {
-  background:#f1f5f9;
-  color:var(--text);
+  background: #f1f5f9;
+  color: var(--text);
 }
 
-.content { padding:20px; }
+/* CONTENT */
+.content {
+  padding: 20px;
+}
 
 iframe {
-  width:100%;
-  height:100%;
-  border:none;
-  background:#fff;
-  border-radius:12px;
-  box-shadow:0 10px 25px rgba(0,0,0,.04);
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: var(--panel);
+  border-radius: var(--radius);
+  box-shadow: 0 10px 25px rgba(0,0,0,.04);
 }
 
+/* FOOTER */
 footer {
-  text-align:center;
-  padding:12px;
-  font-size:13px;
-  color:var(--muted);
-  border-top:1px solid var(--border);
+  text-align: center;
+  padding: 12px;
+  font-size: 13px;
+  color: var(--muted);
+  border-top: 1px solid var(--border);
+  background: var(--panel);
 }
 </style>
 </head>
@@ -97,9 +172,21 @@ footer {
 <body>
 
 <header>
+  <!-- LOGO -->
   <div class="logo">
-    <div class="logo-box">MEM</div>
-    My Exam Mentor
+    <img src="mem.logo" alt="MEM Logo">
+  </div>
+
+  <!-- CENTER TITLE -->
+  <div class="site-title">My Exam Mentor</div>
+
+  <!-- DROPDOWN -->
+  <div class="menu">
+    <button>Menu ▾</button>
+    <div class="menu-content">
+      <div onclick="loadPage('introduction.html')">Introduction</div>
+      <div onclick="loadPage('contact.html')">Contact Us</div>
+    </div>
   </div>
 </header>
 
@@ -118,30 +205,37 @@ footer {
 <script>
 fetch('pdf-index.json')
   .then(res => res.json())
-  .then(data => buildMenu(data));
+  .then(data => buildSidebar(data));
 
-function buildMenu(data) {
+function titleCase(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function buildSidebar(data) {
   const sidebar = document.getElementById('sidebar');
 
   for (const board in data) {
     const boardDetails = document.createElement('details');
     const boardSummary = document.createElement('summary');
-    boardSummary.textContent = board;
+    boardSummary.textContent = board.toUpperCase();
     boardDetails.appendChild(boardSummary);
 
     for (const subject in data[board]) {
       const subjectDetails = document.createElement('details');
+      subjectDetails.className = 'subject';
+
       const subjectSummary = document.createElement('summary');
-      subjectSummary.textContent = subject;
+      subjectSummary.textContent = titleCase(subject);
       subjectDetails.appendChild(subjectSummary);
 
       data[board][subject].forEach(pdf => {
         const div = document.createElement('div');
         div.className = 'file';
         div.textContent = pdf;
-        div.onclick = () =>
+        div.onclick = () => {
           document.getElementById('viewer').src =
-            `pdfs/${board.toLowerCase()}/${subject.toLowerCase()}/${pdf}`;
+            `pdfs/${board}/${subject}/${pdf}`;
+        };
         subjectDetails.appendChild(div);
       });
 
@@ -150,6 +244,10 @@ function buildMenu(data) {
 
     sidebar.appendChild(boardDetails);
   }
+}
+
+function loadPage(page) {
+  document.getElementById('viewer').src = `pages/${page}`;
 }
 </script>
 
