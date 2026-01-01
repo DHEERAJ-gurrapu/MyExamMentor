@@ -1,27 +1,35 @@
 {
+  "cbse": {
+    "maths": [
+      "paper1.pdf"
+,
+      "paper2.pdf"
+    ]
+,
+    "science": [
+      "paper11.pdf"
+    ]
+  }
+,
   "igcse": {
     "maths": [
-      "paper1.pdf",
+      "paper1.pdf"
+,
       "paper2.pdf"
-    ],
+    ]
+,
     "science": [
       "paper11.pdf"
     ]
-  },
-   "cbse": {
+  }
+,
+  "ssc": {
     "maths": [
-      "paper1.pdf",
+      "paper1.pdf"
+,
       "paper2.pdf"
-    ],
-    "science": [
-      "paper11.pdf"
     ]
-  },
-    "ssc": {
-    "maths": [
-      "paper1.pdf",
-      "paper2.pdf"
-    ],
+,
     "science": [
       "paper11.pdf"
     ]
