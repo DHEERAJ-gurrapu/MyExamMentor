@@ -7,148 +7,89 @@
 
 <style>
 :root {
-  --bg: #fafafa;
-  --panel: #fff;
-  --border: #ddd;
-  --text: #111;
-  --muted: #555;
-  --accent: #0b5e4e;
-  --radius: 12px;
-  --transition: 0.25s ease;
+  --bg:#fafafa;
+  --panel:#fff;
+  --border:#e5e7eb;
+  --text:#0f172a;
+  --muted:#64748b;
+  --accent:#0b5e4e;
+  --radius:12px;
 }
 
-* {
-  box-sizing: border-box;
-  font-family: Inter, sans-serif;
-}
+* { box-sizing:border-box; font-family:Inter,system-ui,sans-serif; }
 
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--text);
-}
+body { margin:0; background:var(--bg); color:var(--text); }
 
-/* HEADER */
 header {
-  height: 64px;
-  background: var(--panel);
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 24px;
-  position: sticky;
-  top: 0;
-  z-index: 50;
+  height:64px;
+  background:var(--panel);
+  border-bottom:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 24px;
 }
 
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-weight: 600;
-  font-size: 18px;
-}
-
+.logo { display:flex; gap:10px; font-weight:600; }
 .logo-box {
-  width: 38px;
-  height: 38px;
-  background: var(--accent);
-  color: white;
-  display: grid;
-  place-items: center;
-  border-radius: var(--radius);
-  font-weight: bold;
+  width:38px;height:38px;border-radius:10px;
+  background:var(--accent);color:#fff;
+  display:grid;place-items:center;
 }
 
-nav a {
-  margin-left: 18px;
-  text-decoration: none;
-  color: var(--muted);
-  font-size: 14px;
-  cursor: pointer;
-}
-
-nav a:hover {
-  color: var(--text);
-}
-
-/* MAIN */
 .container {
-  display: grid;
-  grid-template-columns: 260px 1fr;
-  height: calc(100vh - 64px);
+  display:grid;
+  grid-template-columns:280px 1fr;
+  height:calc(100vh - 64px);
 }
 
-/* SIDEBAR */
 .sidebar {
-  background: var(--panel);
-  border-right: 1px solid var(--border);
-  padding: 18px;
-  overflow-y: auto;
+  background:var(--panel);
+  border-right:1px solid var(--border);
+  padding:16px;
+  overflow:auto;
 }
 
-/* Expandables */
-details {
-  margin-bottom: 10px;
-  border-radius: var(--radius);
+details summary {
+  cursor:pointer;
+  padding:8px;
+  font-weight:600;
+  color:var(--accent);
+  list-style:none;
 }
 
-summary {
-  cursor: pointer;
-  padding: 10px;
-  font-weight: 600;
-  color: var(--accent);
-  list-style: none;
+details summary::-webkit-details-marker { display:none; }
+
+.file {
+  padding:6px 10px;
+  font-size:14px;
+  color:var(--muted);
+  cursor:pointer;
+  border-radius:8px;
 }
 
-details summary::-webkit-details-marker {
-  display: none;
+.file:hover {
+  background:#f1f5f9;
+  color:var(--text);
 }
 
-details[open] summary {
-  color: var(--text);
+.content { padding:20px; }
+
+iframe {
+  width:100%;
+  height:100%;
+  border:none;
+  background:#fff;
+  border-radius:12px;
+  box-shadow:0 10px 25px rgba(0,0,0,.04);
 }
 
-/* file link styling */
-.file-link {
-  padding: 6px 10px;
-  display: block;
-  font-size: 14px;
-  color: var(--muted);
-  border-radius: var(--radius);
-  text-decoration: none;
-  transition: background var(--transition), transform var(--transition);
-}
-
-.file-link:hover {
-  background: #f1f5f9;
-  transform: translateX(4px);
-  color: var(--text);
-}
-
-/* CONTENT */
-.content {
-  padding: 24px;
-}
-
-.viewer {
-  width: 100%;
-  height: 100%;
-  border: none;
-  background: var(--panel);
-  border-radius: var(--radius);
-  box-shadow: 0 12px 24px rgba(0,0,0,0.04);
-}
-
-/* FOOTER */
 footer {
-  text-align: center;
-  padding: 12px;
-  background: var(--panel);
-  border-top: 1px solid var(--border);
-  font-size: 13px;
-  color: var(--muted);
+  text-align:center;
+  padding:12px;
+  font-size:13px;
+  color:var(--muted);
+  border-top:1px solid var(--border);
 }
 </style>
 </head>
@@ -160,58 +101,54 @@ footer {
     <div class="logo-box">MEM</div>
     My Exam Mentor
   </div>
-
-  <nav>
-    <a onclick="loadPage('intro')">Introduction</a>
-    <a onclick="loadPage('about')">About Us</a>
-  </nav>
 </header>
 
 <div class="container">
+  <aside class="sidebar" id="sidebar"></aside>
 
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
-
-    <!-- IGCSE -->
-    <details>
-      <summary>IGCSE</summary>
-      <details>
-        <summary>Maths</summary>
-        <a class="file-link" onclick="loadPDF('pdfs/igcse/maths/Maths1.pdf')">Maths1.pdf</a>
-        <a class="file-link" onclick="loadPDF('pdfs/igcse/maths/Maths2.pdf')">Maths2.pdf</a>
-      </details>
-
-      <details>
-        <summary>English</summary>
-        <a class="file-link" onclick="loadPDF('pdfs/igcse/english/Eng1.pdf')">Eng1.pdf</a>
-      </details>
-    </details>
-
-  </aside>
-
-  <!-- CONTENT -->
   <main class="content">
-    <iframe id="viewer" class="viewer"></iframe>
+    <iframe id="viewer"></iframe>
   </main>
-
 </div>
 
 <footer>
-  © 2026 My Exam Mentor • All rights reserved.
+  © 2026 My Exam Mentor. All rights reserved.
 </footer>
 
 <script>
-function loadPDF(path) {
-  document.getElementById("viewer").src = path;
-}
+fetch('pdf-index.json')
+  .then(res => res.json())
+  .then(data => buildMenu(data));
 
-function loadPage(type) {
-  if (type === "intro") {
-    document.getElementById("viewer").srcdoc =
-      "<h2>Welcome to My Exam Mentor</h2><p>This is the introduction page.</p>";
-  } else {
-    document.getElementById("viewer").srcdoc =
-      "<h2>About Us</h2><p>Here is our About Us content.</p>";
+function buildMenu(data) {
+  const sidebar = document.getElementById('sidebar');
+
+  for (const board in data) {
+    const boardDetails = document.createElement('details');
+    const boardSummary = document.createElement('summary');
+    boardSummary.textContent = board;
+    boardDetails.appendChild(boardSummary);
+
+    for (const subject in data[board]) {
+      const subjectDetails = document.createElement('details');
+      const subjectSummary = document.createElement('summary');
+      subjectSummary.textContent = subject;
+      subjectDetails.appendChild(subjectSummary);
+
+      data[board][subject].forEach(pdf => {
+        const div = document.createElement('div');
+        div.className = 'file';
+        div.textContent = pdf;
+        div.onclick = () =>
+          document.getElementById('viewer').src =
+            `pdfs/${board.toLowerCase()}/${subject.toLowerCase()}/${pdf}`;
+        subjectDetails.appendChild(div);
+      });
+
+      boardDetails.appendChild(subjectDetails);
+    }
+
+    sidebar.appendChild(boardDetails);
   }
 }
 </script>
