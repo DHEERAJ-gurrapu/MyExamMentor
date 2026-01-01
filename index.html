@@ -43,15 +43,7 @@ header {
 }
 
 /* LOGO */
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.logo img {
-  height: 36px;
-}
+.logo img { height: 36px; }
 
 /* TITLE */
 .site-title {
@@ -62,31 +54,13 @@ header {
 }
 
 /* MENU */
-.menu {
-  position: relative;
-}
-
+.menu { position: relative; }
 .menu-btn {
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 14px;
   color: var(--muted);
-  display: flex;
-  align-items: center;
-  gap: 6px;
 }
-
-.menu-btn::after {
-  content: "▾";
-  color: var(--accent);
-  transition: transform 0.25s;
-}
-
-.menu.open .menu-btn::after {
-  transform: rotate(180deg);
-}
-
 .menu-content {
   position: absolute;
   right: 0;
@@ -96,27 +70,13 @@ header {
   border-radius: var(--radius);
   box-shadow: 0 12px 28px var(--shadow);
   min-width: 200px;
-  overflow: hidden;
-  opacity: 0;
-  transform: translateY(-10px) scale(0.95);
-  pointer-events: none;
-  transition: all 0.25s ease;
-  z-index: 20;
+  display: none;
 }
-
-.menu.open .menu-content {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-  pointer-events: auto;
-}
-
+.menu.open .menu-content { display: block; }
 .menu-content div {
   padding: 12px 16px;
   cursor: pointer;
-  font-size: 14px;
-  transition: background 0.2s;
 }
-
 .menu-content div:hover {
   background: #e6f4e9;
   color: var(--accent);
@@ -142,87 +102,78 @@ details summary {
   cursor: pointer;
   padding: 10px 12px;
   font-weight: 600;
-  border-radius: var(--radius);
   list-style: none;
-  position: relative;
+  border-radius: var(--radius);
 }
-
-details summary::marker { display: none; }
-
-details summary::after {
-  content: "▸";
-  position: absolute;
-  right: 12px;
-  transition: transform 0.2s;
-}
-
-details[open] summary::after {
-  transform: rotate(90deg);
-}
-
-details[open] > summary {
-  background: #e6f4e9;
-}
+details[open] > summary { background: #e6f4e9; }
 
 /* SUBJECT */
 .subject summary {
   font-weight: 500;
   color: var(--accent);
-  padding-left: 22px;
+  padding-left: 20px;
 }
 
-/* FILE */
-.file {
-  padding: 6px 20px;
-  margin-left: 12px;
+/* YEAR */
+.year {
+  padding: 6px 30px;
   font-size: 14px;
-  color: var(--muted);
   cursor: pointer;
+  color: var(--muted);
   border-radius: 8px;
 }
-
-.file:hover {
+.year:hover {
   background: #e6f4e9;
   color: var(--accent);
 }
 
 /* CONTENT */
 .content {
-  padding: 20px;
+  padding: 12px;
   background: var(--bg);
+  display: flex;
+  flex-direction: column;
 }
 
+/* TABS */
+.tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+  overflow-x: auto;
+}
+
+.tab {
+  padding: 8px 14px;
+  background: #e6f4e9;
+  border-radius: 999px;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.tab.active {
+  background: var(--accent);
+  color: white;
+}
+
+/* PDF */
 iframe {
+  flex: 1;
   width: 100%;
-  height: 100%;
   border: none;
   border-radius: var(--radius);
   background: var(--panel);
-  box-shadow: 0 10px 25px rgba(0,0,0,.04);
 }
 
 /* FOOTER */
 footer {
   text-align: center;
-  padding: 12px;
+  padding: 10px;
   font-size: 13px;
   color: var(--muted);
   border-top: 1px solid var(--border);
-  background: var(--panel);
-}
-
-/* SCROLLBAR */
-.sidebar::-webkit-scrollbar {
-  width: 8px;
-}
-
-.sidebar::-webkit-scrollbar-thumb {
-  background: var(--accent);
-  border-radius: 8px;
-}
-
-.sidebar::-webkit-scrollbar-track {
-  background: #f0fdf4;
 }
 </style>
 </head>
@@ -237,7 +188,7 @@ footer {
   <div class="site-title">My Exam Mentor</div>
 
   <div class="menu" id="menu">
-    <button class="menu-btn" onclick="toggleMenu()">Menu</button>
+    <button class="menu-btn" onclick="toggleMenu()">Menu ▾</button>
     <div class="menu-content">
       <div onclick="loadPage('home.html')">Home</div>
       <div onclick="loadPage('introduction.html')">Introduction</div>
@@ -250,7 +201,7 @@ footer {
   <aside class="sidebar" id="sidebar"></aside>
 
   <main class="content">
-    <!-- DEFAULT HOME LOAD -->
+    <div id="tabs" class="tabs"></div>
     <iframe id="viewer" src="pages/home.html"></iframe>
   </main>
 </div>
@@ -260,62 +211,70 @@ footer {
 </footer>
 
 <script>
-/* MENU */
 function toggleMenu() {
   document.getElementById('menu').classList.toggle('open');
 }
 
-document.addEventListener('click', e => {
-  const menu = document.getElementById('menu');
-  if (!menu.contains(e.target)) menu.classList.remove('open');
-});
-
-/* SIDEBAR */
+/* LOAD JSON */
 fetch('pdf-index.json')
   .then(res => res.json())
   .then(data => buildSidebar(data));
-
-function titleCase(str) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-}
 
 function buildSidebar(data) {
   const sidebar = document.getElementById('sidebar');
 
   for (const board in data) {
-    const boardDetails = document.createElement('details');
-    const boardSummary = document.createElement('summary');
-    boardSummary.textContent = board.toUpperCase();
-    boardDetails.appendChild(boardSummary);
+    const bd = document.createElement('details');
+    const bs = document.createElement('summary');
+    bs.textContent = board.toUpperCase();
+    bd.appendChild(bs);
 
     for (const subject in data[board]) {
-      const subjectDetails = document.createElement('details');
-      subjectDetails.className = 'subject';
+      const sd = document.createElement('details');
+      sd.className = 'subject';
+      const ss = document.createElement('summary');
+      ss.textContent = subject;
+      sd.appendChild(ss);
 
-      const subjectSummary = document.createElement('summary');
-      subjectSummary.textContent = titleCase(subject);
-      subjectDetails.appendChild(subjectSummary);
+      for (const year in data[board][subject]) {
+        const y = document.createElement('div');
+        y.className = 'year';
+        y.textContent = year;
+        y.onclick = () =>
+          openYear(board, subject, year, data[board][subject][year]);
+        sd.appendChild(y);
+      }
 
-      data[board][subject].forEach(pdf => {
-        const div = document.createElement('div');
-        div.className = 'file';
-        div.textContent = pdf;
-        div.onclick = () => {
-          document.getElementById('viewer').src =
-            `pdfs/${board}/${subject}/${pdf}`;
-        };
-        subjectDetails.appendChild(div);
-      });
-
-      boardDetails.appendChild(subjectDetails);
+      bd.appendChild(sd);
     }
 
-    sidebar.appendChild(boardDetails);
+    sidebar.appendChild(bd);
   }
 }
 
-/* PAGE LOAD */
+function openYear(board, subject, year, pdfs) {
+  const tabs = document.getElementById('tabs');
+  const viewer = document.getElementById('viewer');
+
+  tabs.innerHTML = '';
+
+  pdfs.forEach((pdf, i) => {
+    const tab = document.createElement('div');
+    tab.className = 'tab' + (i === 0 ? ' active' : '');
+    tab.textContent = pdf.replace('.pdf', '');
+    tab.onclick = () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      viewer.src = `pdfs/${board}/${subject}/${year}/${pdf}`;
+    };
+    tabs.appendChild(tab);
+  });
+
+  viewer.src = `pdfs/${board}/${subject}/${year}/${pdfs[0]}`;
+}
+
 function loadPage(page) {
+  document.getElementById('tabs').innerHTML = '';
   document.getElementById('viewer').src = `pages/${page}`;
   document.getElementById('menu').classList.remove('open');
 }
