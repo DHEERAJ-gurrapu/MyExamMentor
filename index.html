@@ -117,7 +117,7 @@ details[open]>summary{background:#e6f4e9}
   color:var(--accent);
 }
 
-/* YEAR (hierarchical) */
+/* YEAR */
 .year summary{
   padding-left:34px;
   font-size:14px;
@@ -125,15 +125,15 @@ details[open]>summary{background:#e6f4e9}
   color:#4b5563;
 }
 
-/* PDF ITEM */
-.pdf-item{
+/* PAPER ITEM */
+.paper-item{
   padding:6px 0 6px 52px;
   font-size:13px;
   cursor:pointer;
   color:var(--muted);
 }
-.pdf-item:hover{color:var(--accent)}
-.pdf-item.active{
+.paper-item:hover{color:var(--accent)}
+.paper-item.active{
   color:var(--accent);
   font-weight:600;
 }
@@ -169,6 +169,10 @@ details[open]>summary{background:#e6f4e9}
   font-weight:600;
   border-bottom:3px solid var(--accent);
 }
+.tab.disabled{
+  color:#9ca3af;
+  cursor:default;
+}
 
 /* VIEWER */
 iframe{
@@ -188,16 +192,6 @@ footer{
   text-align:center;
   font-size:13px;
   padding:10px;
-}
-
-/* RESPONSIVE */
-@media(max-width:900px){
-  .container{grid-template-columns:1fr}
-  .sidebar{
-    max-height:260px;
-    border-right:none;
-    border-bottom:1px solid var(--border);
-  }
 }
 </style>
 </head>
@@ -227,17 +221,11 @@ footer{
 <footer>© 2026 My Exam Mentor</footer>
 
 <script>
-/* SMART TOP MENU */
-const pages={
-  Home:'home.html',
-  Introduction:'introduction.html',
-  'Contact Us':'contact.html'
-};
+/* TOP MENU */
+const pages={Home:'home.html',Introduction:'introduction.html','Contact Us':'contact.html'};
 let activePage='Home';
 
-function toggleMenu(){
-  menu.classList.toggle('open');
-}
+function toggleMenu(){menu.classList.toggle('open')}
 function renderMenu(){
   menuBtn.textContent=activePage+' ▾';
   menuItems.innerHTML='';
@@ -260,62 +248,62 @@ function loadPage(p){
 }
 renderMenu();
 
-/* SIDEBAR WITH DESCENDING YEARS */
-fetch('pdf-index.json')
-.then(r=>r.json())
-.then(buildSidebar);
+/* SIDEBAR MAGIC */
+fetch('pdf-index.json').then(r=>r.json()).then(buildSidebar);
 
 function buildSidebar(data){
   sidebar.innerHTML='';
 
   for(const board in data){
     const bd=document.createElement('details');
-    const bs=document.createElement('summary');
-    bs.textContent=board.toUpperCase();
-    bd.appendChild(bs);
+    bd.appendChild(Object.assign(document.createElement('summary'),{textContent:board.toUpperCase()}));
 
     for(const subject in data[board]){
       const sd=document.createElement('details');
       sd.className='subject';
-      const ss=document.createElement('summary');
-      ss.textContent=subject;
-      sd.appendChild(ss);
+      sd.appendChild(Object.assign(document.createElement('summary'),{textContent:subject}));
 
-      // 🔽 SORT YEARS DESCENDING
-      const years = Object.keys(data[board][subject])
-        .sort((a,b)=>b.localeCompare(a));
+      const years=Object.keys(data[board][subject]).sort((a,b)=>b.localeCompare(a));
 
       years.forEach(year=>{
         const yd=document.createElement('details');
         yd.className='year';
-        const ys=document.createElement('summary');
-        ys.textContent=year;
-        yd.appendChild(ys);
+        yd.appendChild(Object.assign(document.createElement('summary'),{textContent:year}));
 
-        data[board][subject][year].forEach(pdf=>{
-          const p=document.createElement('div');
-          p.className='pdf-item';
-          p.textContent=pdf.replace('.pdf','');
+        const grouped={};
 
-          p.onclick=()=>{
-            document.querySelectorAll('.pdf-item')
-              .forEach(x=>x.classList.remove('active'));
-            p.classList.add('active');
+        data[board][subject][year].forEach(file=>{
+          const base=file.replace(/_[QA]\.pdf$/,'').replace('.pdf','');
+          if(!grouped[base]) grouped[base]={};
+          if(file.includes('_Q')) grouped[base].Q=file;
+          else if(file.includes('_A')) grouped[base].A=file;
+          else grouped[base].Q=file;
+        });
+
+        Object.keys(grouped).forEach(base=>{
+          const item=document.createElement('div');
+          item.className='paper-item';
+          item.textContent=base;
+
+          item.onclick=()=>{
+            document.querySelectorAll('.paper-item').forEach(x=>x.classList.remove('active'));
+            item.classList.add('active');
 
             breadcrumb.textContent=
-              `${board.toUpperCase()} → ${subject} → ${year} → ${p.textContent}`;
+              `${board.toUpperCase()} → ${subject} → ${year} → ${base}`;
 
             tabs.innerHTML=`
-              <div class="tab active">Question Paper</div>
-              <div class="tab" onclick="alert('Feature is under development. Please stay tuned.')">Answer Sheet</div>
-              <div class="tab" onclick="alert('Feature is under development. Please stay tuned.')">Analysis</div>
+              <div class="tab active" onclick="loadPDF('${grouped[base].Q}','${board}','${subject}','${year}')">Question Paper</div>
+              ${grouped[base].A
+                ? `<div class="tab" onclick="loadPDF('${grouped[base].A}','${board}','${subject}','${year}')">Answer Sheet</div>`
+                : `<div class="tab disabled">Answer Sheet not for ${base}</div>`}
+              <div class="tab disabled">Analysis (Coming Soon)</div>
             `;
 
-            viewer.src=
-              `pdfs/${board}/${subject}/${year}/${pdf}#view=FitH`;
+            loadPDF(grouped[base].Q,board,subject,year);
           };
 
-          yd.appendChild(p);
+          yd.appendChild(item);
         });
 
         sd.appendChild(yd);
@@ -325,6 +313,10 @@ function buildSidebar(data){
     }
     sidebar.appendChild(bd);
   }
+}
+
+function loadPDF(file,board,subject,year){
+  viewer.src=`pdfs/${board}/${subject}/${year}/${file}#view=FitH`;
 }
 </script>
 
