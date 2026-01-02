@@ -27,9 +27,9 @@
 body {
   background: var(--bg);
   color: var(--text);
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
 }
 
 /* HEADER */
@@ -39,14 +39,11 @@ header {
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
-  padding: 0 24px;
+  padding: 0 20px;
   border-bottom: 1px solid var(--border);
-  box-shadow: 0 4px 10px var(--shadow);
 }
 
-.logo img {
-  height: 36px;
-}
+.logo img { height: 36px; }
 
 .site-title {
   text-align: center;
@@ -56,18 +53,13 @@ header {
 }
 
 /* MENU */
-.menu {
-  position: relative;
-}
-
+.menu { position: relative; }
 .menu-btn {
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 14px;
   color: var(--muted);
 }
-
 .menu-content {
   position: absolute;
   right: 0;
@@ -75,20 +67,13 @@ header {
   background: var(--panel);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  box-shadow: 0 12px 28px var(--shadow);
-  overflow: hidden;
   display: none;
 }
-
-.menu.open .menu-content {
-  display: block;
-}
-
+.menu.open .menu-content { display: block; }
 .menu-content div {
-  padding: 12px 16px;
+  padding: 10px 14px;
   cursor: pointer;
 }
-
 .menu-content div:hover {
   background: #e6f4e9;
   color: var(--accent);
@@ -99,102 +84,83 @@ header {
   display: grid;
   grid-template-columns: 280px 1fr;
   flex: 1;
-  min-height: 0; /* allow flex children to shrink */
+  min-height: 0;
 }
 
 /* SIDEBAR */
 .sidebar {
   background: var(--panel);
   border-right: 1px solid var(--border);
-  padding: 16px;
+  padding: 14px;
   overflow-y: auto;
 }
 
-/* CHEVRON DROPDOWNS */
+/* CHEVRONS */
 details summary {
   cursor: pointer;
-  padding: 10px 12px;
+  padding: 10px;
   font-weight: 600;
-  border-radius: var(--radius);
   list-style: none;
   position: relative;
 }
-
 details summary::marker { display: none; }
-
 details summary::after {
   content: "▸";
   position: absolute;
-  right: 12px;
+  right: 10px;
   transition: transform 0.2s;
 }
+details[open] summary::after { transform: rotate(90deg); }
+details[open] summary { background: #e6f4e9; }
 
-details[open] summary::after {
-  transform: rotate(90deg);
-}
-
-details[open] > summary {
-  background: #e6f4e9;
-}
-
-/* SUBJECT */
 .subject summary {
-  font-weight: 500;
+  padding-left: 18px;
   color: var(--accent);
-  padding-left: 22px;
+  font-weight: 500;
 }
 
-/* YEAR (NO CHEVRON) */
 .year-item {
-  padding: 8px 0 8px 38px;
-  font-size: 14px;
+  padding: 8px 0 8px 36px;
   cursor: pointer;
-  color: var(--muted);
+  font-size: 14px;
 }
-
-.year-item:hover {
-  background: #f0fdf4;
-  color: var(--accent);
-  font-weight: 500;
-}
+.year-item:hover { color: var(--accent); }
 
 /* CONTENT */
 .content {
-  padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  min-height: 0;
+  padding: 14px;
+  gap: 10px;
   overflow: hidden;
 }
 
-/* BREADCRUMB */
 .breadcrumb {
   font-size: 14px;
   color: var(--muted);
-  margin-bottom: 6px;
 }
 
-/* TABS */
-.tabs {
-  display: flex;
-  gap: 6px;
-  border-bottom: 2px solid var(--border);
-  padding-bottom: 6px;
+/* PDF LIST (CHEVRON STYLE) */
+.pdf-list {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
 }
 
-.tab {
-  padding: 8px 14px;
-  font-size: 14px;
+.pdf-item {
+  padding: 10px 14px;
   cursor: pointer;
-  border-bottom: 3px solid transparent;
-  color: var(--muted);
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
 }
-
-.tab.active {
+.pdf-item:last-child { border-bottom: none; }
+.pdf-item:hover { background: #f0fdf4; }
+.pdf-item.active {
+  background: #e6f4e9;
   color: var(--accent);
   font-weight: 600;
-  border-bottom-color: var(--accent);
 }
 
 /* PDF VIEW */
@@ -203,19 +169,28 @@ iframe {
   width: 100%;
   border: none;
   border-radius: var(--radius);
-  background: var(--panel);
-  box-shadow: 0 10px 25px rgba(0,0,0,.04);
+  background: #fff;
 }
 
 /* FOOTER */
 footer {
   text-align: center;
-  padding: 12px;
   font-size: 13px;
-  color: var(--muted);
+  padding: 10px;
   border-top: 1px solid var(--border);
   background: var(--panel);
-  flex-shrink: 0; /* prevent shrinking */
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+  .sidebar {
+    max-height: 220px;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
 }
 </style>
 </head>
@@ -223,12 +198,8 @@ footer {
 <body>
 
 <header>
-  <div class="logo">
-    <img src="mem1.png" alt="MEM">
-  </div>
-
+  <div class="logo"><img src="mem1.png"></div>
   <div class="site-title">My Exam Mentor</div>
-
   <div class="menu" id="menu">
     <button class="menu-btn" onclick="toggleMenu()">Menu ▾</button>
     <div class="menu-content">
@@ -244,14 +215,12 @@ footer {
 
   <main class="content">
     <div class="breadcrumb" id="breadcrumb">Home</div>
-    <div class="tabs" id="tabs"></div>
+    <div class="pdf-list" id="pdfList"></div>
     <iframe id="viewer" src="pages/home.html"></iframe>
   </main>
 </div>
 
-<footer>
-  © 2026 My Exam Mentor. All rights reserved.
-</footer>
+<footer>© 2026 My Exam Mentor</footer>
 
 <script>
 function toggleMenu() {
@@ -260,12 +229,11 @@ function toggleMenu() {
 
 function loadPage(page) {
   document.getElementById('viewer').src = `pages/${page}`;
-  document.getElementById('tabs').innerHTML = '';
-  document.getElementById('breadcrumb').textContent = page.replace('.html', '');
-  document.getElementById('menu').classList.remove('open');
+  document.getElementById('pdfList').innerHTML = '';
+  document.getElementById('breadcrumb').textContent = page.replace('.html','');
 }
 
-/* BUILD SIDEBAR */
+/* SIDEBAR */
 fetch('pdf-index.json')
   .then(res => res.json())
   .then(data => buildSidebar(data));
@@ -275,61 +243,50 @@ function buildSidebar(data) {
 
   for (const board in data) {
     const bd = document.createElement('details');
-    const bs = document.createElement('summary');
-    bs.textContent = board.toUpperCase();
-    bd.appendChild(bs);
+    bd.innerHTML = `<summary>${board.toUpperCase()}</summary>`;
 
     for (const subject in data[board]) {
       const sd = document.createElement('details');
       sd.className = 'subject';
-
-      const ss = document.createElement('summary');
-      ss.textContent = subject;
-      sd.appendChild(ss);
+      sd.innerHTML = `<summary>${subject}</summary>`;
 
       for (const year in data[board][subject]) {
         const y = document.createElement('div');
         y.className = 'year-item';
         y.textContent = year;
-
-        y.onclick = () => {
-          openYear(board, subject, year, data[board][subject][year]);
-        };
-
+        y.onclick = () => openYear(board, subject, year, data[board][subject][year]);
         sd.appendChild(y);
       }
-
       bd.appendChild(sd);
     }
-
     sidebar.appendChild(bd);
   }
 }
 
-/* TABS + PDF + BREADCRUMB */
+/* PDF CHEVRON LIST */
 function openYear(board, subject, year, pdfs) {
-  const tabs = document.getElementById('tabs');
+  const list = document.getElementById('pdfList');
   const viewer = document.getElementById('viewer');
-  const breadcrumb = document.getElementById('breadcrumb');
-  tabs.innerHTML = '';
+  const bc = document.getElementById('breadcrumb');
 
-  breadcrumb.textContent = `${board.toUpperCase()} → ${subject} → ${year}`;
+  list.innerHTML = '';
+  bc.textContent = `${board.toUpperCase()} → ${subject} → ${year}`;
 
   pdfs.forEach((pdf, i) => {
-    const tab = document.createElement('div');
-    tab.className = 'tab' + (i === 0 ? ' active' : '');
-    tab.textContent = pdf.replace('.pdf', '');
+    const item = document.createElement('div');
+    item.className = 'pdf-item' + (i === 0 ? ' active' : '');
+    item.innerHTML = `<span>${pdf.replace('.pdf','')}</span><span>›</span>`;
 
-    tab.onclick = () => {
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-      viewer.src = `pdfs/${board}/${subject}/${year}/${pdf}`;
+    item.onclick = () => {
+      document.querySelectorAll('.pdf-item').forEach(p => p.classList.remove('active'));
+      item.classList.add('active');
+      viewer.src = `pdfs/${board}/${subject}/${year}/${pdf}#view=FitH&zoom=page-width`;
     };
 
-    tabs.appendChild(tab);
+    list.appendChild(item);
   });
 
-  viewer.src = `pdfs/${board}/${subject}/${year}/${pdfs[0]}`;
+  viewer.src = `pdfs/${board}/${subject}/${year}/${pdfs[0]}#view=FitH&zoom=page-width`;
 }
 </script>
 
