@@ -198,6 +198,64 @@ footer{
   font-size:13px;
   padding:10px;
 }
+
+/* =======================
+   MOBILE RESPONSIVENESS
+======================= */
+
+@media (max-width: 900px){
+  .container{
+    grid-template-columns:220px 1fr;
+  }
+}
+
+@media (max-width: 768px){
+  header{
+    grid-template-columns:auto 1fr auto;
+    padding:0 12px;
+  }
+
+  .site-title{
+    font-size:16px;
+  }
+
+  .container{
+    grid-template-columns:1fr;
+  }
+
+  .sidebar{
+    position:relative;
+    max-height:220px;
+    overflow-y:auto;
+    border-right:none;
+    border-bottom:1px solid var(--border);
+  }
+
+  .content{
+    padding:12px;
+  }
+
+  iframe{
+    min-height:60vh;
+  }
+}
+
+@media (max-width: 480px){
+  .site-title{
+    font-size:15px;
+  }
+
+  .menu-btn{
+    font-size:13px;
+  }
+
+  footer{
+    font-size:12px;
+    padding:8px;
+  }
+}
+
+
 </style>
 </head>
 
@@ -223,7 +281,9 @@ footer{
   </main>
 </div>
 
-<footer>© 2026 My Exam Mentor</footer>
+<footer>
+    © 2026 My Exam Mentor · Built with ❤️ by Dheeraj Gurrapu
+</footer>
 
 <script>
 /* TOP MENU */
