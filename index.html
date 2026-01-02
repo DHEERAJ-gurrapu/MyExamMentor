@@ -51,14 +51,18 @@ header {
   color: var(--accent);
 }
 
-/* MENU */
+/* TOP RIGHT MENU */
 .menu { position: relative; }
+
 .menu-btn {
   background: none;
   border: none;
   cursor: pointer;
-  color: var(--muted);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent);
 }
+
 .menu-content {
   position: absolute;
   right: 0;
@@ -67,12 +71,17 @@ header {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   display: none;
+  min-width: 160px;
 }
+
 .menu.open .menu-content { display: block; }
+
 .menu-content div {
   padding: 10px 14px;
   cursor: pointer;
+  font-size: 14px;
 }
+
 .menu-content div:hover {
   background: #e6f4e9;
   color: var(--accent);
@@ -114,16 +123,15 @@ details[open] summary { background: #e6f4e9; }
 /* SUBJECT */
 .subject summary {
   padding-left: 18px;
-  font-weight: 600;
   font-size: 14.5px;
   color: var(--accent);
 }
 
-/* YEAR — FIXED HIERARCHY */
+/* YEAR */
 .year summary {
   padding-left: 36px;
-  font-weight: 500;
   font-size: 13px;
+  font-weight: 500;
   color: #5f8f78;
 }
 
@@ -194,8 +202,10 @@ iframe {
   background: #fff;
 }
 
-/* FOOTER */
+/* FOOTER — ALWAYS VISIBLE */
 footer {
+  position: sticky;
+  bottom: 0;
   text-align: center;
   font-size: 13px;
   padding: 10px;
@@ -220,10 +230,11 @@ footer {
 <header>
   <div class="logo"><img src="mem1.png"></div>
   <div class="site-title">My Exam Mentor</div>
+
+  <!-- HOME DROPDOWN -->
   <div class="menu" id="menu">
-    <button class="menu-btn" onclick="toggleMenu()">Menu ▾</button>
+    <button class="menu-btn" onclick="toggleMenu()">Home ▾</button>
     <div class="menu-content">
-      <div onclick="loadPage('home.html')">Home</div>
       <div onclick="loadPage('introduction.html')">Introduction</div>
       <div onclick="loadPage('contact.html')">Contact Us</div>
     </div>
@@ -236,7 +247,9 @@ footer {
   <main class="content">
     <div class="breadcrumb" id="breadcrumb">Home</div>
     <div class="tabs" id="tabs"></div>
-    <div id="viewer-container"></div>
+    <div id="viewer-container">
+      <iframe src="pages/home.html"></iframe>
+    </div>
   </main>
 </div>
 
@@ -253,6 +266,7 @@ function loadPage(page) {
     `<iframe src="pages/${page}"></iframe>`;
   document.getElementById('breadcrumb').textContent =
     page.replace('.html','');
+  document.getElementById('menu').classList.remove('open');
 }
 
 /* SIDEBAR */
