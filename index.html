@@ -8,7 +8,7 @@
 <style>
 :root{
   --bg:#f7fdf6;
-  --panel:#fff;
+  --panel:#ffffff;
   --border:#d1e7d3;
   --text:#0f172a;
   --muted:#6b7280;
@@ -38,6 +38,7 @@ header{
 }
 
 .logo img{height:36px}
+
 .site-title{
   text-align:center;
   font-weight:700;
@@ -105,7 +106,7 @@ details summary::after{
   content:"▸";
   position:absolute;
   right:10px;
-  transition:0.2s;
+  transition:.2s;
 }
 details[open]>summary::after{transform:rotate(90deg)}
 details[open]>summary{background:#e6f4e9}
@@ -125,7 +126,7 @@ details[open]>summary{background:#e6f4e9}
   color:#4b5563;
 }
 
-/* PAPER ITEM */
+/* PAPER */
 .paper-item{
   padding:6px 0 6px 52px;
   font-size:13px;
@@ -155,7 +156,7 @@ details[open]>summary{background:#e6f4e9}
 /* TABS */
 .tabs{
   display:flex;
-  gap:8px;
+  gap:10px;
   border-bottom:2px solid var(--border);
 }
 .tab{
@@ -168,6 +169,10 @@ details[open]>summary{background:#e6f4e9}
   color:var(--accent);
   font-weight:600;
   border-bottom:3px solid var(--accent);
+}
+.tab.not-found{
+  color:#ef4444;
+  cursor:default;
 }
 .tab.disabled{
   color:#9ca3af;
@@ -248,7 +253,7 @@ function loadPage(p){
 }
 renderMenu();
 
-/* SIDEBAR MAGIC */
+/* SIDEBAR */
 fetch('pdf-index.json').then(r=>r.json()).then(buildSidebar);
 
 function buildSidebar(data){
@@ -274,9 +279,8 @@ function buildSidebar(data){
 
         data[board][subject][year].forEach(file=>{
           const base=file.replace(/_[QA]\.pdf$/,'').replace('.pdf','');
-          if(!grouped[base]) grouped[base]={};
-          if(file.includes('_Q')) grouped[base].Q=file;
-          else if(file.includes('_A')) grouped[base].A=file;
+          grouped[base]=grouped[base]||{};
+          if(file.includes('_A')) grouped[base].A=file;
           else grouped[base].Q=file;
         });
 
@@ -289,18 +293,31 @@ function buildSidebar(data){
             document.querySelectorAll('.paper-item').forEach(x=>x.classList.remove('active'));
             item.classList.add('active');
 
-            breadcrumb.textContent=
-              `${board.toUpperCase()} → ${subject} → ${year} → ${base}`;
+            breadcrumb.textContent=`${board.toUpperCase()} → ${subject} → ${year} → ${base}`;
 
             tabs.innerHTML=`
-              <div class="tab active" onclick="loadPDF('${grouped[base].Q}','${board}','${subject}','${year}')">Question Paper</div>
-              ${grouped[base].A
-                ? `<div class="tab" onclick="loadPDF('${grouped[base].A}','${board}','${subject}','${year}')">Answer Sheet</div>`
-                : `<div class="tab disabled">Answer Sheet not for ${base}</div>`}
+              <div class="tab active" data-type="Q">Question Paper</div>
+              ${
+                grouped[base].A
+                ? `<div class="tab" data-type="A">Answer Sheet</div>`
+                : `<div class="tab not-found">Answer Sheet Not Found</div>`
+              }
               <div class="tab disabled">Analysis (Coming Soon)</div>
             `;
 
-            loadPDF(grouped[base].Q,board,subject,year);
+            document.querySelectorAll('.tab[data-type]').forEach(tab=>{
+              tab.onclick=()=>{
+                document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+                tab.classList.add('active');
+
+                if(tab.dataset.type==='Q')
+                  viewer.src=`pdfs/${board}/${subject}/${year}/${grouped[base].Q}#view=FitH`;
+                if(tab.dataset.type==='A')
+                  viewer.src=`pdfs/${board}/${subject}/${year}/${grouped[base].A}#view=FitH`;
+              };
+            });
+
+            viewer.src=`pdfs/${board}/${subject}/${year}/${grouped[base].Q}#view=FitH`;
           };
 
           yd.appendChild(item);
@@ -313,10 +330,6 @@ function buildSidebar(data){
     }
     sidebar.appendChild(bd);
   }
-}
-
-function loadPDF(file,board,subject,year){
-  viewer.src=`pdfs/${board}/${subject}/${year}/${file}#view=FitH`;
 }
 </script>
 
