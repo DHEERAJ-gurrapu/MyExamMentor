@@ -78,6 +78,22 @@ body {
   color: #374151;
 }
 
+/* FOUNDER LAYOUT */
+.founder {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.founder img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid var(--green1);
+  flex-shrink: 0;
+}
+
 /* FULL WIDTH CARD */
 .full {
   margin-top: 24px;
@@ -88,6 +104,12 @@ body {
   .grid {
     grid-template-columns: 1fr;
   }
+
+  .founder {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
 }
 </style>
 </head>
@@ -97,7 +119,7 @@ body {
 <!-- HERO -->
 <div class="hero">
   <h1>About My Exam Mentor</h1>
-  <p>Know the platform, the purpose, and the people behind MEM.</p>
+  <p>Know the platform, the purpose, and the person behind MEM.</p>
 </div>
 
 <!-- ABOUT SECTION -->
@@ -111,30 +133,48 @@ body {
       <h2>About the Product</h2>
       <p>
         <strong>My Exam Mentor (MEM)</strong> is built to simplify exam preparation
-        for students by organizing authentic past papers in a clean, distraction-free way.
+        by organizing authentic past papers in a clean, distraction-free way.
       </p>
       <p>
-        Instead of searching multiple sites, students can quickly find
-        board-wise, subject-wise, and year-wise papers — all in one place.
+        Students can quickly find board-wise, subject-wise, and year-wise papers
+        without wasting time searching across multiple websites.
       </p>
     </div>
 
     <!-- ABOUT FOUNDER -->
     <div class="card">
       <h2>About the Founder</h2>
-      <p>
-        MEM is created by a student who understands the real challenges of exam preparation —
-        confusion, time pressure, and lack of proper resources.
-      </p>
-      <p>
-        The goal is simple: build tools that are actually useful, easy to use,
-        and designed from a student’s point of view.
-      </p>
+
+      <div class="founder">
+        <!-- PLACE YOUR IMAGE HERE -->
+        <img src="scripts/dheeraj.jpg" alt="Dheeraj Gurrapu">
+
+        <div>
+          <p>
+            Hi, I’m <strong>Dheeraj Gurrapu</strong>, a Grade 7 student studying in
+            an international school.
+          </p>
+          <p>
+            The idea for <strong>My Exam Mentor</strong> came from a very personal place.
+            I noticed my sibling struggling to find the right past papers while preparing
+            for exams. The resources were scattered, confusing, or hard to access.
+          </p>
+          <p>
+            I felt that if this problem existed for my sibling, it probably existed for
+            many other students as well — including my classmates.
+            Since I had the ability to build a solution, I decided to do it.
+          </p>
+          <p>
+            MEM is created by a student, for students — with the aim of making learning
+            simpler, more organized, and less stressful.
+          </p>
+        </div>
+      </div>
     </div>
 
   </div>
 
-  <!-- SUPPORT (VERTICAL FULL WIDTH) -->
+  <!-- SUPPORT -->
   <div class="card full">
     <h2>Support</h2>
     <p>
@@ -142,8 +182,8 @@ body {
       incorrect files, or have suggestions, your feedback truly matters.
     </p>
     <p>
-      Support is focused on helping students learn better, faster, and smarter —
-      without unnecessary complexity.
+      The goal is simple — support students with the right resources at the right time,
+      and help them prepare with confidence.
     </p>
   </div>
 
