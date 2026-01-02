@@ -24,17 +24,7 @@
 ,
   "igcse": {
       "Maths(Extended)": {
-        "2023": [
-          "Jun2023-QP-V1.pdf",
-          "Jun2023-QP-V2.pdf",
-          "Jun2023-QP-V3.pdf",
-          "Mar2023-QP-V2.pdf",
-          "Nov2023-QP-V1.pdf",
-          "Nov2023-QP-V2.pdf",
-          "Nov2023-QP-V3.pdf"
-        ],
         "2024": [
-          "paper-dheeraj.pdf",
           "paper1.pdf"
         ]
       },
