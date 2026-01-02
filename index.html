@@ -7,219 +7,121 @@
 
 <style>
 :root {
-  --bg: #f7fdf6;
-  --panel: #ffffff;
-  --border: #d1e7d3;
-  --text: #0f172a;
-  --muted: #6b7280;
-  --accent: #3d9d6f;
-  --radius: 12px;
+  --bg:#f7fdf6;
+  --panel:#ffffff;
+  --border:#d1e7d3;
+  --text:#0f172a;
+  --muted:#6b7280;
+  --accent:#3d9d6f;
+  --radius:12px;
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: Inter, system-ui, sans-serif;
-}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Inter,system-ui,sans-serif}
 
-body {
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+body{
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
 }
 
 /* HEADER */
-header {
-  height: 64px;
-  background: var(--panel);
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  padding: 0 20px;
-  border-bottom: 1px solid var(--border);
+header{
+  height:64px;
+  background:var(--panel);
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  align-items:center;
+  padding:0 20px;
+  border-bottom:1px solid var(--border);
 }
 
-.logo img { height: 36px; }
-
-.site-title {
-  text-align: center;
-  font-weight: 700;
-  font-size: 20px;
-  color: var(--accent);
+.logo img{height:36px}
+.site-title{
+  text-align:center;
+  font-weight:700;
+  font-size:20px;
+  color:var(--accent);
 }
 
-/* TOP RIGHT MENU */
-.menu { position: relative; }
-
-.menu-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--accent);
+/* TOP MENU */
+.menu{position:relative}
+.menu-btn{
+  background:none;
+  border:none;
+  cursor:pointer;
+  font-size:14px;
+  font-weight:600;
+  color:var(--accent);
 }
-
-.menu-content {
-  position: absolute;
-  right: 0;
-  top: 40px;
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  display: none;
-  min-width: 160px;
+.menu-content{
+  position:absolute;
+  right:0;
+  top:40px;
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  display:none;
+  min-width:170px;
 }
-
-.menu.open .menu-content { display: block; }
-
-.menu-content div {
-  padding: 10px 14px;
-  cursor: pointer;
-  font-size: 14px;
+.menu.open .menu-content{display:block}
+.menu-content div{
+  padding:10px 14px;
+  cursor:pointer;
+  font-size:14px;
 }
-
-.menu-content div:hover {
-  background: #e6f4e9;
-  color: var(--accent);
+.menu-content div:hover{
+  background:#e6f4e9;
+  color:var(--accent);
 }
 
 /* LAYOUT */
-.container {
-  display: grid;
-  grid-template-columns: 280px 1fr;
-  flex: 1;
+.container{
+  display:grid;
+  grid-template-columns:280px 1fr;
+  flex:1;
 }
 
 /* SIDEBAR */
-.sidebar {
-  background: var(--panel);
-  border-right: 1px solid var(--border);
-  padding: 14px;
-  overflow-y: auto;
-}
-
-/* CHEVRONS */
-details summary {
-  cursor: pointer;
-  padding: 10px;
-  font-weight: 600;
-  list-style: none;
-  position: relative;
-}
-details summary::marker { display: none; }
-details summary::after {
-  content: "▸";
-  position: absolute;
-  right: 10px;
-  transition: transform 0.2s;
-}
-details[open] summary::after { transform: rotate(90deg); }
-details[open] summary { background: #e6f4e9; }
-
-/* SUBJECT */
-.subject summary {
-  padding-left: 18px;
-  font-size: 14.5px;
-  color: var(--accent);
-}
-
-/* YEAR */
-.year summary {
-  padding-left: 36px;
-  font-size: 13px;
-  font-weight: 500;
-  color: #5f8f78;
-}
-
-/* PDF ITEM */
-.pdf-item {
-  padding: 6px 0 6px 56px;
-  font-size: 12.5px;
-  cursor: pointer;
-  color: var(--muted);
-}
-.pdf-item:hover {
-  background: #f0fdf4;
-  color: var(--accent);
-}
-.pdf-item.active {
-  font-weight: 600;
-  color: var(--accent);
+.sidebar{
+  background:var(--panel);
+  border-right:1px solid var(--border);
+  padding:14px;
+  overflow-y:auto;
 }
 
 /* CONTENT */
-.content {
-  padding: 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+.content{
+  padding:14px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
 }
 
-/* BREADCRUMB */
-.breadcrumb {
-  font-size: 14px;
-  color: var(--muted);
+.breadcrumb{
+  font-size:14px;
+  color:var(--muted);
 }
 
-/* TABS */
-.tabs {
-  display: flex;
-  gap: 6px;
-  border-bottom: 2px solid var(--border);
-}
-.tab {
-  padding: 8px 14px;
-  cursor: pointer;
-  font-size: 14px;
-  color: var(--muted);
-  border-bottom: 3px solid transparent;
-}
-.tab.active {
-  color: var(--accent);
-  font-weight: 600;
-  border-bottom-color: var(--accent);
-}
-
-/* MESSAGE */
-.message {
-  padding: 40px;
-  text-align: center;
-  color: var(--muted);
-  background: var(--panel);
-  border-radius: var(--radius);
-}
-
-/* PDF VIEW */
-iframe {
-  width: 100%;
-  min-height: 75vh;
-  border: none;
-  border-radius: var(--radius);
-  background: #fff;
-}
-
-/* FOOTER — ALWAYS VISIBLE */
-footer {
-  position: sticky;
-  bottom: 0;
-  text-align: center;
-  font-size: 13px;
-  padding: 10px;
-  border-top: 1px solid var(--border);
-  background: var(--panel);
+/* FOOTER */
+footer{
+  position:sticky;
+  bottom:0;
+  text-align:center;
+  font-size:13px;
+  padding:10px;
+  border-top:1px solid var(--border);
+  background:var(--panel);
 }
 
 /* RESPONSIVE */
-@media (max-width: 900px) {
-  .container { grid-template-columns: 1fr; }
-  .sidebar {
-    max-height: 260px;
-    border-right: none;
-    border-bottom: 1px solid var(--border);
+@media(max-width:900px){
+  .container{grid-template-columns:1fr}
+  .sidebar{
+    max-height:260px;
+    border-right:none;
+    border-bottom:1px solid var(--border);
   }
 }
 </style>
@@ -231,127 +133,65 @@ footer {
   <div class="logo"><img src="mem1.png"></div>
   <div class="site-title">My Exam Mentor</div>
 
-  <!-- HOME DROPDOWN -->
+  <!-- SMART MENU -->
   <div class="menu" id="menu">
-    <button class="menu-btn" onclick="toggleMenu()">Home ▾</button>
-    <div class="menu-content">
-      <div onclick="loadPage('introduction.html')">Introduction</div>
-      <div onclick="loadPage('contact.html')">Contact Us</div>
-    </div>
+    <button class="menu-btn" id="menuBtn" onclick="toggleMenu()">Home ▾</button>
+    <div class="menu-content" id="menuItems"></div>
   </div>
 </header>
 
 <div class="container">
-  <aside class="sidebar" id="sidebar"></aside>
+  <aside class="sidebar"></aside>
 
   <main class="content">
     <div class="breadcrumb" id="breadcrumb">Home</div>
-    <div class="tabs" id="tabs"></div>
-    <div id="viewer-container">
-      <iframe src="pages/home.html"></iframe>
-    </div>
+    <iframe id="pageFrame" src="pages/home.html"
+      style="width:100%;min-height:75vh;border:none;border-radius:12px;"></iframe>
   </main>
 </div>
 
 <footer>© 2026 My Exam Mentor</footer>
 
 <script>
-function toggleMenu() {
+/* -------- SMART TOP MENU -------- */
+const pages = {
+  Home: 'home.html',
+  Introduction: 'introduction.html',
+  'Contact Us': 'contact.html'
+};
+
+let activePage = 'Home';
+
+function toggleMenu(){
   document.getElementById('menu').classList.toggle('open');
 }
 
-function loadPage(page) {
-  document.getElementById('tabs').innerHTML = '';
-  document.getElementById('viewer-container').innerHTML =
-    `<iframe src="pages/${page}"></iframe>`;
-  document.getElementById('breadcrumb').textContent =
-    page.replace('.html','');
-  document.getElementById('menu').classList.remove('open');
-}
+function renderMenu(){
+  const btn = document.getElementById('menuBtn');
+  const list = document.getElementById('menuItems');
+  btn.textContent = `${activePage} ▾`;
+  list.innerHTML = '';
 
-/* SIDEBAR */
-fetch('pdf-index.json')
-  .then(res => res.json())
-  .then(data => buildSidebar(data));
-
-function buildSidebar(data) {
-  const sidebar = document.getElementById('sidebar');
-  sidebar.innerHTML = '';
-
-  for (const board in data) {
-    const bd = document.createElement('details');
-    bd.innerHTML = `<summary>${board.toUpperCase()}</summary>`;
-
-    for (const subject in data[board]) {
-      const sd = document.createElement('details');
-      sd.className = 'subject';
-      sd.innerHTML = `<summary>${subject}</summary>`;
-
-      for (const year in data[board][subject]) {
-        const yd = document.createElement('details');
-        yd.className = 'year';
-        yd.innerHTML = `<summary>${year}</summary>`;
-
-        data[board][subject][year].forEach(pdf => {
-          const p = document.createElement('div');
-          p.className = 'pdf-item';
-          p.textContent = pdf.replace('.pdf','');
-          p.onclick = () => openPDF(board, subject, year, pdf, p);
-          yd.appendChild(p);
-        });
-
-        sd.appendChild(yd);
-      }
-      bd.appendChild(sd);
+  Object.keys(pages).forEach(page=>{
+    if(page !== activePage){
+      const item = document.createElement('div');
+      item.textContent = page;
+      item.onclick = ()=>loadPage(page);
+      list.appendChild(item);
     }
-    sidebar.appendChild(bd);
-  }
+  });
 }
 
-/* PDF + TABS */
-function openPDF(board, subject, year, pdf, el) {
-  document.querySelectorAll('.pdf-item')
-    .forEach(x => x.classList.remove('active'));
-  el.classList.add('active');
-
-  document.getElementById('breadcrumb').textContent =
-    `${board.toUpperCase()} → ${subject} → ${year} → ${pdf.replace('.pdf','')}`;
-
-  const tabs = document.getElementById('tabs');
-  tabs.innerHTML = '';
-
-  const viewer = document.getElementById('viewer-container');
-
-  const qp = createTab('Question Paper', true, () => {
-    viewer.innerHTML =
-      `<iframe src="pdfs/${board}/${subject}/${year}/${pdf}#view=FitH&zoom=page-width"></iframe>`;
-  });
-
-  const as = createTab('Answer Sheet', false, () => {
-    viewer.innerHTML =
-      `<div class="message">Feature is under development.<br>Please stay tuned.</div>`;
-  });
-
-  const an = createTab('Analysis', false, () => {
-    viewer.innerHTML =
-      `<div class="message">Feature is under development.<br>Please stay tuned.</div>`;
-  });
-
-  tabs.append(qp, as, an);
-  qp.click();
+function loadPage(page){
+  activePage = page;
+  document.getElementById('pageFrame').src = `pages/${pages[page]}`;
+  document.getElementById('breadcrumb').textContent = page;
+  document.getElementById('menu').classList.remove('open');
+  renderMenu();
 }
 
-function createTab(label, active, action) {
-  const t = document.createElement('div');
-  t.className = 'tab' + (active ? ' active' : '');
-  t.textContent = label;
-  t.onclick = () => {
-    document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
-    t.classList.add('active');
-    action();
-  };
-  return t;
-}
+/* INIT */
+renderMenu();
 </script>
 
 </body>
