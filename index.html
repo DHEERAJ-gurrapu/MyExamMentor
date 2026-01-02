@@ -38,7 +38,6 @@ header{
 }
 
 .logo img{height:36px}
-
 .site-title{
   text-align:center;
   font-weight:700;
@@ -118,7 +117,7 @@ details[open]>summary{background:#e6f4e9}
   color:var(--accent);
 }
 
-/* YEAR */
+/* YEAR (hierarchical) */
 .year summary{
   padding-left:34px;
   font-size:14px;
@@ -148,7 +147,6 @@ details[open]>summary{background:#e6f4e9}
   min-height:0;
 }
 
-/* BREADCRUMB */
 .breadcrumb{
   font-size:14px;
   color:var(--muted);
@@ -229,7 +227,7 @@ footer{
 <footer>© 2026 My Exam Mentor</footer>
 
 <script>
-/* SMART MENU */
+/* SMART TOP MENU */
 const pages={
   Home:'home.html',
   Introduction:'introduction.html',
@@ -238,7 +236,7 @@ const pages={
 let activePage='Home';
 
 function toggleMenu(){
-  document.getElementById('menu').classList.toggle('open');
+  menu.classList.toggle('open');
 }
 function renderMenu(){
   menuBtn.textContent=activePage+' ▾';
@@ -262,13 +260,14 @@ function loadPage(p){
 }
 renderMenu();
 
-/* SIDEBAR */
+/* SIDEBAR WITH DESCENDING YEARS */
 fetch('pdf-index.json')
 .then(r=>r.json())
 .then(buildSidebar);
 
 function buildSidebar(data){
   sidebar.innerHTML='';
+
   for(const board in data){
     const bd=document.createElement('details');
     const bs=document.createElement('summary');
@@ -282,7 +281,11 @@ function buildSidebar(data){
       ss.textContent=subject;
       sd.appendChild(ss);
 
-      for(const year in data[board][subject]){
+      // 🔽 SORT YEARS DESCENDING
+      const years = Object.keys(data[board][subject])
+        .sort((a,b)=>b.localeCompare(a));
+
+      years.forEach(year=>{
         const yd=document.createElement('details');
         yd.className='year';
         const ys=document.createElement('summary');
@@ -293,8 +296,10 @@ function buildSidebar(data){
           const p=document.createElement('div');
           p.className='pdf-item';
           p.textContent=pdf.replace('.pdf','');
+
           p.onclick=()=>{
-            document.querySelectorAll('.pdf-item').forEach(x=>x.classList.remove('active'));
+            document.querySelectorAll('.pdf-item')
+              .forEach(x=>x.classList.remove('active'));
             p.classList.add('active');
 
             breadcrumb.textContent=
@@ -306,13 +311,16 @@ function buildSidebar(data){
               <div class="tab" onclick="alert('Feature is under development. Please stay tuned.')">Analysis</div>
             `;
 
-            viewer.src=`pdfs/${board}/${subject}/${year}/${pdf}#view=FitH`;
+            viewer.src=
+              `pdfs/${board}/${subject}/${year}/${pdf}#view=FitH`;
           };
+
           yd.appendChild(p);
         });
 
         sd.appendChild(yd);
-      }
+      });
+
       bd.appendChild(sd);
     }
     sidebar.appendChild(bd);
