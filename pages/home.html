@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>My Exam Mentor – Home</title>
+<title>My Exam Mentor</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
@@ -15,6 +15,8 @@
   --muted: #475569;
 }
 
+* { box-sizing: border-box; }
+
 body {
   margin: 0;
   font-family: Inter, Arial, sans-serif;
@@ -22,37 +24,56 @@ body {
   color: var(--text);
 }
 
+/* HERO – SQUEEZED */
 .hero {
   background: linear-gradient(135deg, var(--green1), var(--green2));
   color: white;
-  padding: 80px 30px;
+  padding: 40px 20px;
   text-align: center;
-  border-radius: 16px;
+  border-radius: 0 0 20px 20px;
 }
 
 .hero h1 {
-  font-size: 40px;
-  margin-bottom: 12px;
+  font-size: 32px;
+  margin-bottom: 6px;
 }
 
 .hero p {
-  font-size: 18px;
-  max-width: 700px;
+  font-size: 16px;
+  max-width: 600px;
   margin: auto;
   opacity: 0.95;
 }
 
+/* SECTIONS */
 .section {
-  margin: 40px auto;
   max-width: 900px;
+  margin: 40px auto;
   padding: 0 20px;
 }
 
 .section h2 {
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 24px;
+  color: var(--green1);
 }
 
+/* ABOUT CARD */
+.about-card {
+  background: var(--card);
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,.06);
+  text-align: center;
+}
+
+.about-card p {
+  line-height: 1.7;
+  color: #374151;
+  margin-bottom: 14px;
+}
+
+/* FEATURES */
 .features {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -68,13 +89,14 @@ body {
 }
 
 .card h3 {
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   color: var(--green1);
 }
 
+/* STEPS */
 .steps {
   display: grid;
-  gap: 20px;
+  gap: 16px;
 }
 
 .step {
@@ -90,45 +112,72 @@ body {
 .step span {
   background: var(--green1);
   color: white;
-  width: 36px;
-  height: 36px;
+  width: 34px;
+  height: 34px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
   font-weight: bold;
+  flex-shrink: 0;
+}
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 24px;
+  color: var(--muted);
+  font-size: 14px;
 }
 </style>
 </head>
 
 <body>
 
+<!-- HERO -->
 <div class="hero">
-  <h1>Welcome to My Exam Mentor</h1>
-  <p>Your complete exam preparation platform for IGCSE, CBSE, and SSC students.</p>
+  <h1>My Exam Mentor</h1>
+  <p>Your simple, smart exam preparation platform for IGCSE, CBSE & SSC.</p>
 </div>
 
+<!-- ABOUT -->
+<div class="section">
+  <div class="about-card">
+    <h2>About MEM</h2>
+    <p>
+      <strong>My Exam Mentor (MEM)</strong> is a student-first platform designed to make
+      exam preparation organized, fast, and stress-free.
+    </p>
+    <p>
+      We provide easy access to authentic past papers so you can practise smarter,
+      revise effectively, and score higher.
+    </p>
+  </div>
+</div>
+
+<!-- FEATURES -->
 <div class="section">
   <h2>Why Choose My Exam Mentor?</h2>
 
   <div class="features">
     <div class="card">
-      <h3>Comprehensive Papers</h3>
-      <p>Access years of authentic past examination papers.</p>
+      <h3>Authentic Papers</h3>
+      <p>Years of real examination papers at one place.</p>
     </div>
 
     <div class="card">
-      <h3>Easy Access</h3>
-      <p>Instant viewing and downloading of PDFs.</p>
+      <h3>Instant Access</h3>
+      <p>View and download PDFs without hassle.</p>
     </div>
 
     <div class="card">
-      <h3>Regular Updates</h3>
-      <p>Latest papers added as soon as they are available.</p>
+      <h3>Always Updated</h3>
+      <p>New papers added as soon as they are released.</p>
     </div>
   </div>
 </div>
 
+<!-- HOW IT WORKS -->
 <div class="section">
   <h2>How It Works</h2>
 
@@ -136,24 +185,24 @@ body {
     <div class="step">
       <span>1</span>
       <div>
-        <strong>Choose Your Board</strong><br>
-        Select IGCSE, CBSE, or SSC
+        <strong>Select Board</strong><br>
+        IGCSE, CBSE, or SSC
       </div>
     </div>
 
     <div class="step">
       <span>2</span>
       <div>
-        <strong>Pick Your Subject</strong><br>
-        Browse available subjects
+        <strong>Choose Subject</strong><br>
+        Maths, Science, and more
       </div>
     </div>
 
     <div class="step">
       <span>3</span>
       <div>
-        <strong>Select Papers</strong><br>
-        Choose year and session
+        <strong>Pick Papers</strong><br>
+        Year and session
       </div>
     </div>
 
@@ -161,11 +210,15 @@ body {
       <span>4</span>
       <div>
         <strong>Practice & Excel</strong><br>
-        Study smart and score higher
+        Prepare confidently
       </div>
     </div>
   </div>
 </div>
+
+<footer>
+  © 2026 My Exam Mentor • Learn Smart
+</footer>
 
 </body>
 </html>
