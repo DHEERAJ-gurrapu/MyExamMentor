@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>About – My Exam Mentor</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root {
+  --green1: #3d9d6f;
+  --green2: #6fd19b;
+  --bg: #f7fdf6;
+  --card: #ffffff;
+  --text: #0f172a;
+  --muted: #475569;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Inter, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* HERO */
+.hero {
+  background: linear-gradient(135deg, var(--green1), var(--green2));
+  color: white;
+  padding: 28px 20px;
+  text-align: center;
+  border-radius: 0 0 20px 20px;
+}
+
+.hero h1 {
+  font-size: 30px;
+  margin-bottom: 4px;
+}
+
+.hero p {
+  font-size: 15px;
+  max-width: 600px;
+  margin: auto;
+  opacity: 0.95;
+}
+
+/* SECTION */
+.section {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+/* GRID */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+/* CARD */
+.card {
+  background: var(--card);
+  padding: 28px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,.06);
+}
+
+.card h2 {
+  color: var(--green1);
+  margin-bottom: 10px;
+  font-size: 22px;
+}
+
+.card p {
+  line-height: 1.7;
+  color: #374151;
+}
+
+/* FULL WIDTH CARD */
+.full {
+  margin-top: 24px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>About My Exam Mentor</h1>
+  <p>Know the platform, the purpose, and the people behind MEM.</p>
+</div>
+
+<!-- ABOUT SECTION -->
+<div class="section">
+
+  <!-- HALF SPLIT -->
+  <div class="grid">
+
+    <!-- ABOUT PRODUCT -->
+    <div class="card">
+      <h2>About the Product</h2>
+      <p>
+        <strong>My Exam Mentor (MEM)</strong> is built to simplify exam preparation
+        for students by organizing authentic past papers in a clean, distraction-free way.
+      </p>
+      <p>
+        Instead of searching multiple sites, students can quickly find
+        board-wise, subject-wise, and year-wise papers — all in one place.
+      </p>
+    </div>
+
+    <!-- ABOUT FOUNDER -->
+    <div class="card">
+      <h2>About the Founder</h2>
+      <p>
+        MEM is created by a student who understands the real challenges of exam preparation —
+        confusion, time pressure, and lack of proper resources.
+      </p>
+      <p>
+        The goal is simple: build tools that are actually useful, easy to use,
+        and designed from a student’s point of view.
+      </p>
+    </div>
+
+  </div>
+
+  <!-- SUPPORT (VERTICAL FULL WIDTH) -->
+  <div class="card full">
+    <h2>Support</h2>
+    <p>
+      My Exam Mentor is continuously improving. If you find missing papers,
+      incorrect files, or have suggestions, your feedback truly matters.
+    </p>
+    <p>
+      Support is focused on helping students learn better, faster, and smarter —
+      without unnecessary complexity.
+    </p>
+  </div>
+
+</div>
+
+</body>
+</html>

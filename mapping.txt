@@ -28,3 +28,10 @@ Business Studies -
 Environmental Management - 
 
 Economics - 
+
+
+
+
+Points for Analysis
+1. Topic wise FontWeight
+2. Question importance at year level ?
