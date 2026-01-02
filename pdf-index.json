@@ -25,13 +25,20 @@
   "igcse": {
       "Maths(Extended)": {
         "2023": [
-          "Jun2023-QP-V1.pdf",
-          "Jun2023-QP-V2.pdf",
-          "Jun2023-QP-V3.pdf",
-          "Mar2023-QP-V2.pdf",
-          "Nov2023-QP-V1.pdf",
-          "Nov2023-QP-V2.pdf",
-          "Nov2023-QP-V3.pdf"
+          "Jun-P2-V1-A.pdf",
+          "Jun-P2-V1-Q.pdf",
+          "Jun-P2-V2-A.pdf",
+          "Jun-P2-V2-Q.pdf",
+          "Jun-P2-V3-A.pdf",
+          "Jun-P2-V3-Q.pdf",
+          "Mar-P2-V2-A.pdf",
+          "Mar-P2-V2-Q.pdf",
+          "Nov-P2-V1-A.pdf",
+          "Nov-P2-V1-Q.pdf",
+          "Nov-P2-V2-A.pdf",
+          "Nov-P2-V2-Q.pdf",
+          "Nov-P2-V3-A.pdf",
+          "Nov-P2-V3-Q.pdf"
         ],
         "2024": [
           "paper1.pdf"
