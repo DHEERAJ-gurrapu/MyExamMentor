@@ -24,24 +24,32 @@ body {
   color: var(--text);
 }
 
-/* HERO – MORE SQUEEZED */
+/* HERO – COMBINED */
 .hero {
   background: linear-gradient(135deg, var(--green1), var(--green2));
   color: white;
-  padding: 28px 20px; /* squeezed */
+  padding: 32px 20px 36px;
   text-align: center;
   border-radius: 0 0 20px 20px;
 }
 
 .hero h1 {
   font-size: 30px;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 
-.hero p {
+.hero .tagline {
   font-size: 15px;
-  max-width: 600px;
+  max-width: 620px;
+  margin: 0 auto 16px;
+  opacity: 0.95;
+}
+
+.hero .about {
+  max-width: 720px;
   margin: auto;
+  font-size: 14.8px;
+  line-height: 1.7;
   opacity: 0.95;
 }
 
@@ -56,23 +64,8 @@ body {
   text-align: center;
   margin-bottom: 20px;
   color: var(--green1);
-  font-size: 30px; /* SAME size as main title */
+  font-size: 30px;
   font-weight: 700;
-}
-
-/* ABOUT CARD */
-.about-card {
-  background: var(--card);
-  padding: 28px;
-  border-radius: 16px;
-  box-shadow: 0 10px 25px rgba(0,0,0,.06);
-  text-align: center;
-}
-
-.about-card p {
-  line-height: 1.7;
-  color: #374151;
-  margin-bottom: 14px;
 }
 
 /* FEATURES */
@@ -128,24 +121,17 @@ body {
 
 <body>
 
-<!-- HERO -->
+<!-- HERO (TITLE + TAGLINE + ABOUT) -->
 <div class="hero">
   <h1>My Exam Mentor</h1>
-  <p>Your simple, smart exam preparation platform for IGCSE, CBSE & SSC.</p>
-</div>
-
-<!-- ABOUT -->
-<div class="section">
-  <div class="about-card">
-    <h2>About MEM</h2>
-    <p>
-      <strong>My Exam Mentor (MEM)</strong> is a student-first platform designed to make
-      exam preparation organized, fast, and stress-free.
-    </p>
-    <p>
-      We provide easy access to authentic past papers so you can practise smarter,
-      revise effectively, and score higher.
-    </p>
+  <div class="tagline">
+    Your simple, smart exam preparation platform for IGCSE, CBSE & SSC.
+  </div>
+  <div class="about">
+    <strong>My Exam Mentor (MEM)</strong> is a student-first platform designed to make
+    exam preparation organized, fast, and stress-free.
+    We provide easy access to authentic past papers so you can practise smarter,
+    revise effectively, and score higher.
   </div>
 </div>
 
