@@ -6,9 +6,9 @@
 <title>My Exam Mentor</title>
 
 <style>
-:root {
+:root{
   --bg:#f7fdf6;
-  --panel:#ffffff;
+  --panel:#fff;
   --border:#d1e7d3;
   --text:#0f172a;
   --muted:#6b7280;
@@ -38,6 +38,7 @@ header{
 }
 
 .logo img{height:36px}
+
 .site-title{
   text-align:center;
   font-weight:700;
@@ -61,15 +62,14 @@ header{
   top:40px;
   background:var(--panel);
   border:1px solid var(--border);
-  border-radius:var(--radius);
+  border-radius:12px;
   display:none;
-  min-width:170px;
+  min-width:160px;
 }
 .menu.open .menu-content{display:block}
 .menu-content div{
   padding:10px 14px;
   cursor:pointer;
-  font-size:14px;
 }
 .menu-content div:hover{
   background:#e6f4e9;
@@ -81,6 +81,7 @@ header{
   display:grid;
   grid-template-columns:280px 1fr;
   flex:1;
+  min-height:0;
 }
 
 /* SIDEBAR */
@@ -91,28 +92,104 @@ header{
   overflow-y:auto;
 }
 
+/* CHEVRONS */
+details summary{
+  cursor:pointer;
+  padding:8px 10px;
+  font-weight:600;
+  list-style:none;
+  position:relative;
+  border-radius:8px;
+}
+details summary::marker{display:none}
+details summary::after{
+  content:"▸";
+  position:absolute;
+  right:10px;
+  transition:0.2s;
+}
+details[open]>summary::after{transform:rotate(90deg)}
+details[open]>summary{background:#e6f4e9}
+
+/* SUBJECT */
+.subject summary{
+  padding-left:20px;
+  font-weight:600;
+  color:var(--accent);
+}
+
+/* YEAR */
+.year summary{
+  padding-left:34px;
+  font-size:14px;
+  font-weight:500;
+  color:#4b5563;
+}
+
+/* PDF ITEM */
+.pdf-item{
+  padding:6px 0 6px 52px;
+  font-size:13px;
+  cursor:pointer;
+  color:var(--muted);
+}
+.pdf-item:hover{color:var(--accent)}
+.pdf-item.active{
+  color:var(--accent);
+  font-weight:600;
+}
+
 /* CONTENT */
 .content{
-  padding:14px;
+  padding:16px;
   display:flex;
   flex-direction:column;
   gap:10px;
+  min-height:0;
 }
 
+/* BREADCRUMB */
 .breadcrumb{
   font-size:14px;
   color:var(--muted);
+}
+
+/* TABS */
+.tabs{
+  display:flex;
+  gap:8px;
+  border-bottom:2px solid var(--border);
+}
+.tab{
+  padding:6px 12px;
+  font-size:14px;
+  cursor:pointer;
+  color:var(--muted);
+}
+.tab.active{
+  color:var(--accent);
+  font-weight:600;
+  border-bottom:3px solid var(--accent);
+}
+
+/* VIEWER */
+iframe{
+  flex:1;
+  width:100%;
+  border:none;
+  border-radius:12px;
+  background:#fff;
 }
 
 /* FOOTER */
 footer{
   position:sticky;
   bottom:0;
+  background:var(--panel);
+  border-top:1px solid var(--border);
   text-align:center;
   font-size:13px;
   padding:10px;
-  border-top:1px solid var(--border);
-  background:var(--panel);
 }
 
 /* RESPONSIVE */
@@ -133,7 +210,6 @@ footer{
   <div class="logo"><img src="mem1.png"></div>
   <div class="site-title">My Exam Mentor</div>
 
-  <!-- SMART MENU -->
   <div class="menu" id="menu">
     <button class="menu-btn" id="menuBtn" onclick="toggleMenu()">Home ▾</button>
     <div class="menu-content" id="menuItems"></div>
@@ -141,57 +217,107 @@ footer{
 </header>
 
 <div class="container">
-  <aside class="sidebar"></aside>
+  <aside class="sidebar" id="sidebar"></aside>
 
   <main class="content">
     <div class="breadcrumb" id="breadcrumb">Home</div>
-    <iframe id="pageFrame" src="pages/home.html"
-      style="width:100%;min-height:75vh;border:none;border-radius:12px;"></iframe>
+    <div class="tabs" id="tabs"></div>
+    <iframe id="viewer" src="pages/home.html"></iframe>
   </main>
 </div>
 
 <footer>© 2026 My Exam Mentor</footer>
 
 <script>
-/* -------- SMART TOP MENU -------- */
-const pages = {
-  Home: 'home.html',
-  Introduction: 'introduction.html',
-  'Contact Us': 'contact.html'
+/* SMART MENU */
+const pages={
+  Home:'home.html',
+  Introduction:'introduction.html',
+  'Contact Us':'contact.html'
 };
-
-let activePage = 'Home';
+let activePage='Home';
 
 function toggleMenu(){
   document.getElementById('menu').classList.toggle('open');
 }
-
 function renderMenu(){
-  const btn = document.getElementById('menuBtn');
-  const list = document.getElementById('menuItems');
-  btn.textContent = `${activePage} ▾`;
-  list.innerHTML = '';
-
-  Object.keys(pages).forEach(page=>{
-    if(page !== activePage){
-      const item = document.createElement('div');
-      item.textContent = page;
-      item.onclick = ()=>loadPage(page);
-      list.appendChild(item);
+  menuBtn.textContent=activePage+' ▾';
+  menuItems.innerHTML='';
+  Object.keys(pages).forEach(p=>{
+    if(p!==activePage){
+      const d=document.createElement('div');
+      d.textContent=p;
+      d.onclick=()=>loadPage(p);
+      menuItems.appendChild(d);
     }
   });
 }
-
-function loadPage(page){
-  activePage = page;
-  document.getElementById('pageFrame').src = `pages/${pages[page]}`;
-  document.getElementById('breadcrumb').textContent = page;
-  document.getElementById('menu').classList.remove('open');
+function loadPage(p){
+  activePage=p;
+  viewer.src='pages/'+pages[p];
+  breadcrumb.textContent=p;
+  tabs.innerHTML='';
   renderMenu();
+  menu.classList.remove('open');
 }
-
-/* INIT */
 renderMenu();
+
+/* SIDEBAR */
+fetch('pdf-index.json')
+.then(r=>r.json())
+.then(buildSidebar);
+
+function buildSidebar(data){
+  sidebar.innerHTML='';
+  for(const board in data){
+    const bd=document.createElement('details');
+    const bs=document.createElement('summary');
+    bs.textContent=board.toUpperCase();
+    bd.appendChild(bs);
+
+    for(const subject in data[board]){
+      const sd=document.createElement('details');
+      sd.className='subject';
+      const ss=document.createElement('summary');
+      ss.textContent=subject;
+      sd.appendChild(ss);
+
+      for(const year in data[board][subject]){
+        const yd=document.createElement('details');
+        yd.className='year';
+        const ys=document.createElement('summary');
+        ys.textContent=year;
+        yd.appendChild(ys);
+
+        data[board][subject][year].forEach(pdf=>{
+          const p=document.createElement('div');
+          p.className='pdf-item';
+          p.textContent=pdf.replace('.pdf','');
+          p.onclick=()=>{
+            document.querySelectorAll('.pdf-item').forEach(x=>x.classList.remove('active'));
+            p.classList.add('active');
+
+            breadcrumb.textContent=
+              `${board.toUpperCase()} → ${subject} → ${year} → ${p.textContent}`;
+
+            tabs.innerHTML=`
+              <div class="tab active">Question Paper</div>
+              <div class="tab" onclick="alert('Feature is under development. Please stay tuned.')">Answer Sheet</div>
+              <div class="tab" onclick="alert('Feature is under development. Please stay tuned.')">Analysis</div>
+            `;
+
+            viewer.src=`pdfs/${board}/${subject}/${year}/${pdf}#view=FitH`;
+          };
+          yd.appendChild(p);
+        });
+
+        sd.appendChild(yd);
+      }
+      bd.appendChild(sd);
+    }
+    sidebar.appendChild(bd);
+  }
+}
 </script>
 
 </body>
