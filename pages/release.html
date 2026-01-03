@@ -143,34 +143,37 @@ tr:hover{
 
 <script>
 fetch('release.csv')
-  .then(r=>r.text())
-  .then(csv=>{
-    const lines=csv.trim().split('\n');
-    const rows=lines.slice(1);
-    const tbody=document.querySelector('#releaseTable tbody');
-    tbody.innerHTML='';
+  .then(r => r.text())
+  .then(csv => {
+    const lines = csv.trim().split('\n');
+    const rows = lines.slice(1);
+    const tbody = document.querySelector('#releaseTable tbody');
+    tbody.innerHTML = '';
 
-    if(rows.length===0){
-      tbody.innerHTML='<tr><td colspan="5" class="empty">No releases yet</td></tr>';
+    if (rows.length === 0) {
+      tbody.innerHTML =
+        '<tr><td colspan="5" class="empty">No releases yet</td></tr>';
       return;
     }
 
-    rows.forEach(row=>{
-      const cols=row.split(',');
-      const tr=document.createElement('tr');
+    rows.forEach(row => {
+      if (!row.trim()) return;
 
-      tr.innerHTML=`
-        <td>${cols[0]}</td>
-        <td>${cols[1]}</td>
-        <td><span class="version">${cols[2]}</span></td>
-        <td>${cols[3]}</td>
-        <td>${cols[4]}</td>
+      const cols = row.split('|'); // PIPE separator
+
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${cols[0] || ''}</td>
+        <td>${cols[1] || ''}</td>
+        <td><span class="version">${cols[2] || ''}</span></td>
+        <td>${cols[3] || ''}</td>
+        <td>${cols[4] || ''}</td>
       `;
       tbody.appendChild(tr);
     });
   })
-  .catch(()=>{
-    document.querySelector('#releaseTable tbody').innerHTML=
+  .catch(() => {
+    document.querySelector('#releaseTable tbody').innerHTML =
       '<tr><td colspan="5" class="empty">Failed to load release notes</td></tr>';
   });
 </script>
