@@ -334,7 +334,7 @@ function buildSidebar(data){
         yd.className='year';
         yd.appendChild(Object.assign(document.createElement('summary'),{textContent:year}));
 
-        const files=data[board][subject][year];
+        const files=data[board][subject][year].filter(f => f.toLowerCase().endsWith('.pdf'));
         if(files.length===0){
           const i=document.createElement('div');
           i.className='paper-item';
