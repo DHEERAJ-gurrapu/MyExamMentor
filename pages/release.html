@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Release Notes – My Exam Mentor</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root {
+  --green1:#3d9d6f;
+  --green2:#6fd19b;
+  --bg:#f7fdf6;
+  --card:#ffffff;
+  --text:#0f172a;
+  --muted:#475569;
+  --border:#d1e7d3;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Inter,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+
+/* HERO */
+.hero{
+  background:linear-gradient(135deg,var(--green1),var(--green2));
+  color:#fff;
+  padding:28px 20px;
+  text-align:center;
+  border-radius:0 0 20px 20px;
+}
+.hero h1{font-size:30px;margin-bottom:6px}
+.hero p{font-size:15px;max-width:600px;margin:auto;opacity:.95}
+
+/* SECTION */
+.section{
+  max-width:1100px;
+  margin:40px auto;
+  padding:0 20px;
+}
+
+/* CARD */
+.card{
+  background:var(--card);
+  padding:26px;
+  border-radius:16px;
+  box-shadow:0 10px 25px rgba(0,0,0,.06);
+}
+
+/* TABLE */
+.table-wrap{
+  overflow-x:auto;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:700px;
+}
+
+thead{
+  background:#e6f4e9;
+}
+
+th,td{
+  padding:14px 16px;
+  text-align:left;
+  border-bottom:1px solid var(--border);
+  font-size:14px;
+}
+
+th{
+  color:var(--green1);
+  font-weight:700;
+}
+
+tr:hover{
+  background:#f0faf4;
+}
+
+/* VERSION TAG */
+.version{
+  background:#e6f4e9;
+  color:var(--green1);
+  padding:4px 10px;
+  border-radius:999px;
+  font-weight:600;
+  font-size:13px;
+  display:inline-block;
+}
+
+/* EMPTY */
+.empty{
+  text-align:center;
+  font-size:18px;
+  color:var(--muted);
+  padding:40px;
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .hero h1{font-size:24px}
+  table{min-width:600px}
+}
+</style>
+</head>
+
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>Release Notes</h1>
+  <p>Track updates, improvements, and milestones of My Exam Mentor.</p>
+</div>
+
+<!-- CONTENT -->
+<div class="section">
+  <div class="card">
+    <div class="table-wrap">
+      <table id="releaseTable">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Release Date</th>
+            <th>Version</th>
+            <th>Title</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td colspan="5" class="empty">Loading release notes…</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+fetch('release.csv')
+  .then(r=>r.text())
+  .then(csv=>{
+    const lines=csv.trim().split('\n');
+    const rows=lines.slice(1);
+    const tbody=document.querySelector('#releaseTable tbody');
+    tbody.innerHTML='';
+
+    if(rows.length===0){
+      tbody.innerHTML='<tr><td colspan="5" class="empty">No releases yet</td></tr>';
+      return;
+    }
+
+    rows.forEach(row=>{
+      const cols=row.split(',');
+      const tr=document.createElement('tr');
+
+      tr.innerHTML=`
+        <td>${cols[0]}</td>
+        <td>${cols[1]}</td>
+        <td><span class="version">${cols[2]}</span></td>
+        <td>${cols[3]}</td>
+        <td>${cols[4]}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  })
+  .catch(()=>{
+    document.querySelector('#releaseTable tbody').innerHTML=
+      '<tr><td colspan="5" class="empty">Failed to load release notes</td></tr>';
+  });
+</script>
+
+</body>
+</html>
