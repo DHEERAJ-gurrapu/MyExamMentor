@@ -23,12 +23,6 @@
   }
 ,
   "igcse": {
-      "Chemistry(Extended)": {
-        "2023": [
-          "paper-dheeraj.pdf",
-          "paper1.pdf"
-        ]
-      },
       "Maths(Extended)": {
         "2023": [
           "Jun-P2-V1_A.pdf",
@@ -47,12 +41,6 @@
           "Nov-P2-V3_Q.pdf"
         ],
         "2024": [
-          "paper1.pdf"
-        ]
-      },
-      "Science": {
-        "2024": [
-          "paper-dheeraj.pdf",
           "paper1.pdf"
         ]
       }
