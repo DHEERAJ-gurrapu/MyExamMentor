@@ -197,29 +197,4 @@
         ]
       }
   }
-,
-  "ssc": {
-      "Maths(Extended)": {
-        "2023": [
-          "paper-dheeraj.pdf",
-          "paper1_A.pdf",
-          "paper1_Q.pdf"
-        ],
-        "2024": [
-          "paper-dheeraj.pdf",
-          "paper112_A.pdf",
-          "paper112_Q.pdf"
-        ]
-      },
-      "Science": {
-        "2023": [
-          "paper-dheeraj.pdf",
-          "paper1.pdf"
-        ],
-        "2024": [
-          "paper-dheeraj.pdf",
-          "paper1.pdf"
-        ]
-      }
-  }
 }
