@@ -1,23 +1,11 @@
 {
   "cbse": {
-      "Maths(Extended)": {
+      "Maths": {
         "2023": [
-          "paper-dheeraj.pdf",
-          "paper1.pdf"
+          "test2023.txt"
         ],
         "2024": [
-          "paper-dheeraj.pdf",
-          "paper1.pdf"
-        ]
-      },
-      "Science": {
-        "2023": [
-          "paper-dheeraj.pdf",
-          "paper1.pdf"
-        ],
-        "2024": [
-          "paper-dheeraj.pdf",
-          "paper1.pdf"
+          "test.txt"
         ]
       }
   }
