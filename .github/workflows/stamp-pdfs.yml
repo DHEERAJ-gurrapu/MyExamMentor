@@ -32,7 +32,7 @@ jobs:
       # 4️⃣ Run stamping script
       - name: Stamp all PDFs
         run: |
-          python scripts/stamp_pdfs.py
+          python scripts/stamp-pdfs.py
 
       # 5️⃣ Commit & push changes (only if any)
       - name: Commit and push changes
