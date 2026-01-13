@@ -1,15 +1,13 @@
 name: Stamp PDFs and Commit Back
 
 on:
-  push:
-    branches:
-      - main
-    paths-ignore:
-      - "pdfs/**"
-  workflow_dispatch:
+  schedule:
+    - cron: "30 19 * * *"   # 1:00 AM IST (UTC+5:30)
+
+  workflow_dispatch:        # optional manual run
 
 permissions:
-  contents: write   # 🔑 THIS IS THE FIX
+  contents: write
 
 jobs:
   stamp-pdfs:
